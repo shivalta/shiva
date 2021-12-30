@@ -1,1 +1,1 @@
-# shiva-auth
+# Auth Service
