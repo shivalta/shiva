@@ -16,7 +16,6 @@ func init() {
 
 func main() {
 	//e := echo.New()
-
 	//fmt.Println(viper.GetString("databases.postgres.host"))
 
 }
