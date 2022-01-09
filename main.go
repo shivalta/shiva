@@ -2,20 +2,22 @@ package main
 
 import (
 	"github.com/spf13/viper"
+	"shiva/shiva-auth/cmd/http"
 	"shiva/shiva-auth/configs/driver"
+	"shiva/shiva-auth/migrations"
 )
 
 func init() {
-	viper.SetConfigFile(`configs/config.yaml`)
+	//viper.SetConfigFile(`configs/env/config.yaml`)
+	viper.SetConfigFile(`configs/env/config.local.yaml`)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
 	}
 	driver.SetupDatabasePostgres()
+	migrations.AutoMigrate()
 }
 
 func main() {
-	//e := echo.New()
-	//fmt.Println(viper.GetString("databases.postgres.host"))
-
+	http.InitHttp()
 }

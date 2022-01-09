@@ -9,7 +9,9 @@ import (
 	"log"
 )
 
-func SetupDatabasePostgres() *gorm.DB {
+var Psql *gorm.DB
+
+func SetupDatabasePostgres() {
 	dsn := fmt.Sprintf("host=%v user=%v password=%v dbname=%v port=%v sslmode=%v TimeZone=%v",
 		viper.GetString(`databases.postgres.host`),
 		viper.GetString(`databases.postgres.user`),
@@ -19,12 +21,12 @@ func SetupDatabasePostgres() *gorm.DB {
 		viper.GetString(`databases.postgres.sslmode`),
 		viper.GetString(`databases.postgres.timezone`),
 	)
-	fmt.Println(viper.Get("databases.postgres.host"))
+	fmt.Println(viper.Get("databases.postgres.dbname"))
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	db.Logger = logger.Default.LogMode(logger.Info)
 	if err != nil {
 		panic(err.Error)
 	}
 	log.Println("Postgres Connected!")
-	return db
+	Psql = db
 }
