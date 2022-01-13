@@ -35,6 +35,16 @@ type Users struct {
 //	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 //}
 
+func FromDomain(u accounts.Domain) Users{
+	return Users{
+		Name:      u.Name,
+		Email:     u.Email,
+		Handphone: u.Handphone,
+		Address:   u.Address,
+		Password:  u.Password,
+	}
+}
+
 func (u *Users) UserToDomain() accounts.Domain {
 	return accounts.Domain{
 		ID:        u.ID,

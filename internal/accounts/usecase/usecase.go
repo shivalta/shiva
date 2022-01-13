@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/internal/accounts"
 )
@@ -18,7 +19,11 @@ func NewAccountUsecase(r accounts.Repository) accounts.Usecase {
 }
 
 func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err error) {
-	panic("implement me")
+	if user.Password != user.Repassword {
+		return accounts.Domain{}, errors.New("Password tidak valid")
+	}
+	res, err := uc.data.Create(user)
+	return res, nil
 }
 
 func (uc accountUsecase) GetAll(search string) (data []accounts.Domain, err error) {

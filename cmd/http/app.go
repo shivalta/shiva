@@ -2,7 +2,6 @@ package http
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"shiva/shiva-auth/factory"
 )
 
@@ -10,9 +9,12 @@ func InitHttp() {
 	f := factory.InitFactoryHTTP()
 
 	e := echo.New()
-	e.Pre(middleware.RemoveTrailingSlash())
+	initMiddleware(e)
 
-	e.GET("/", f.Accounts.GetAll)
+	v1 := e.Group("api/v1/")
+
+	v1.GET("/users", f.Accounts.GetAll)
+	v1.POST("/users", f.Accounts.Create)
 	err := e.Start(":1111")
 	if err != nil {
 		return

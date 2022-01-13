@@ -16,7 +16,12 @@ func NewAccountRepo(psql *gorm.DB) accounts.Repository {
 }
 
 func (p *pgAccountRepository) Create(user accounts.Domain) (accounts.Domain, error) {
-	panic("implement me")
+	u := FromDomain(user)
+	err := p.Psql.Create(&u)
+	if err.Error != nil {
+		return accounts.Domain{}, err.Error
+	}
+	return u.UserToDomain(), nil
 }
 
 func (p *pgAccountRepository) GetAll(search string) ([]accounts.Domain, error) {
