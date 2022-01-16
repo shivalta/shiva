@@ -11,13 +11,18 @@ type Request struct {
 	Repassword string `json:"repassword"`
 }
 
-func ToDomain(req Request) accounts.Domain {
+type RequestLogin struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+func (r *Request) ToDomain() accounts.Domain {
 	return accounts.Domain{
-		Name:       req.Name,
-		Email:      req.Email,
-		Handphone:  req.Handphone,
-		Address:    req.Address,
-		Password:   req.Password,
-		Repassword: req.Repassword,
+		Name:       r.Name,
+		Email:      r.Email,
+		Handphone:  r.Handphone,
+		Address:    r.Address,
+		Password:   r.Password,
+		Repassword: r.Repassword,
 	}
 }
