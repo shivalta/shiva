@@ -13,13 +13,13 @@ func InitHttp() {
 	middlewares.InitMiddleware(e)
 
 	v1 := e.Group("api/v1/")
-	v1.POST("/login", f.Accounts.Login)
+	v1.POST("/auth/login", f.Accounts.Login)
 
 	v1.GET("/users", f.Accounts.GetAll)
 	v1.POST("/users", f.Accounts.Create)
-	v1.GET("/users/{userId}", f.Accounts.GetById)
-	v1.DELETE("/users/{userId}", f.Accounts.Delete)
-	v1.PUT("/users/{userId}", f.Accounts.Update)
+	v1.GET("/users/:userId", f.Accounts.GetById)
+	v1.DELETE("/users/:userId", f.Accounts.Delete)
+	v1.PUT("/users/:userId", f.Accounts.Update)
 	err := e.Start(":1111")
 	if err != nil {
 		return

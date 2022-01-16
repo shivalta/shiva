@@ -56,9 +56,12 @@ func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
 		} else if u.ID == 0 {
 			return accounts.Domain{}, baseErrors.ErrNotFound
 		}
-	} else if user.Name != "" {
+	}
+
+	if user.Name == "" {
+		log.Println("UPDATE")
 		return accounts.Domain{}, baseErrors.ErrUsersNameRequired
-	} else if user.Handphone != "" {
+	} else if user.Handphone == "" {
 		return accounts.Domain{}, baseErrors.ErrUsersHandphoneRequired
 	}
 	data, err := uc.data.Update(user)
