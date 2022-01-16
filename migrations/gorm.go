@@ -8,7 +8,6 @@ import (
 func AutoMigrate() {
 	err := driver.Psql.AutoMigrate(
 		&repository.Users{},
-		&repository.Admin{},
 	)
 	if err != nil {
 		return

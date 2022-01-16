@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/labstack/echo/v4"
+	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/factory"
 )
 
@@ -9,7 +10,7 @@ func InitHttp() {
 	f := factory.InitFactoryHTTP()
 
 	e := echo.New()
-	initMiddleware(e)
+	middlewares.InitMiddleware(e)
 
 	v1 := e.Group("api/v1/")
 	v1.POST("/login", f.Accounts.Login)

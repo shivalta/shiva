@@ -1,4 +1,4 @@
-package http
+package middlewares
 
 import (
 	"github.com/golang-jwt/jwt"
@@ -13,7 +13,7 @@ import (
 
 type JWTCustomClaims struct {
 	ID      uint `json:"id"`
-	IsAdmin bool  `json:"is_admin"`
+	IsAdmin bool `json:"is_admin"`
 	jwt.StandardClaims
 }
 

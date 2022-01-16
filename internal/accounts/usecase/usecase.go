@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/go-playground/validator/v10"
 	"log"
-	"shiva/shiva-auth/cmd/http"
+	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/utils/baseErrors"
 	"shiva/shiva-auth/utils/hash"
@@ -13,10 +13,10 @@ import (
 type accountUsecase struct {
 	data     accounts.Repository
 	validate *validator.Validate
-	jwtAuth  *http.ConfigJWT
+	jwtAuth  *middlewares.ConfigJWT
 }
 
-func NewAccountUsecase(r accounts.Repository, jwt *http.ConfigJWT) accounts.Usecase {
+func NewAccountUsecase(r accounts.Repository, jwt *middlewares.ConfigJWT) accounts.Usecase {
 	return &accountUsecase{
 		data:     r,
 		validate: validator.New(),
