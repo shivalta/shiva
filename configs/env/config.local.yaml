@@ -8,10 +8,10 @@ encrypt:
 debug: true
 databases:
   postgres:
-    host: shiva-auth-postgres
-    user: root
+    host: localhost
+    user: aprian1337
     password: root123
-    dbname: auth
+    dbname: shiva-auth
     port: '5432'
     sslmode: disable
     timezone: Asia/Jakarta
