@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"errors"
 	"github.com/go-playground/validator/v10"
 	"log"
 	"shiva/shiva-auth/cmd/http/middlewares"
@@ -59,7 +58,6 @@ func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
 	}
 
 	if user.Name == "" {
-		log.Println("UPDATE")
 		return accounts.Domain{}, baseErrors.ErrUsersNameRequired
 	} else if user.Handphone == "" {
 		return accounts.Domain{}, baseErrors.ErrUsersHandphoneRequired
@@ -97,8 +95,13 @@ func (uc accountUsecase) GetById(id uint) (accounts.Domain, error) {
 
 func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err error) {
 	if user.Password != user.Repassword {
-		return accounts.Domain{}, errors.New("Password tidak valid")
+		return accounts.Domain{}, baseErrors.ErrInvalidPassword
 	}
+	hashPass, err := hash.HashPassword(user.Password)
+	if err != nil {
+		return accounts.Domain{}, nil
+	}
+	user.Password = hashPass
 	res, err := uc.data.Create(user)
 	return res, nil
 }

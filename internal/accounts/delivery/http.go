@@ -84,7 +84,7 @@ func (h *Http) Delete(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	return baseResponse.SuccessResponse(c, convUserId, "update successfuly")
+	return baseResponse.SuccessResponse(c, convUserId, "delete successfuly")
 }
 
 func (h *Http) GetById(c echo.Context) error {
