@@ -9,7 +9,7 @@ on:
       - 'main'
 
 jobs:
-  unit-test:
+  Unit-test-and-build-go:
     name: "unit test"
     runs-on: ubuntu-latest
     steps:
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: add config.yaml
         env:
-          CONFIG_JSON: ${{secrets.CONFIG_YAML}}
+          CONFIG_YAML: ${{secrets.CONFIG_YAML}}
         run: echo "$CONFIG_YAML" > configs/env/config.yaml
       - name: build docker
         run: docker build -t aprian1337/shiva:1.0.0 .
@@ -63,4 +63,4 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull aprian1337/shiva:1.0.0 && docker run -d -p 8080:1111 --name shiva aprian1337/shiva:1.0.0'
+        run: ssh development 'docker pull aprian1337/shiva:1.0.0 && docker run -d -p 8080:1111 --name shiva aprian1337/shiva:1.0.0'
