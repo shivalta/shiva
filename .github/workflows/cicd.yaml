@@ -74,5 +74,5 @@ jobs:
 #            docker pull aprian1337/shiva:1.0.0 && docker run -d -p 1111:8080 --name shiva aprian1337/shiva:1.0.0
 
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull aprian1337/shiva:1.0.0 && docker run -d -p 1111:1111 --name shiva_container aprian1337/shiva:1.0.0'
+        run: ssh development 'docker pull aprian1337/shiva:1.0.0 && docker run -d -p 1111:1111 --name shivalta aprian1337/shiva:1.0.0'
 
