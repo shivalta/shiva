@@ -27,10 +27,10 @@ jobs:
     needs: unit-test
     steps:
       - uses: actions/checkout@v2
-#      - name: add config.json
-#        env:
-#          CONFIG_JSON: ${{secrets.CONFIG_JSON}}
-#        run: echo "$CONFIG_JSON" > configs/env/config.yaml
+      - name: add config.yaml
+        env:
+          CONFIG_JSON: ${{secrets.CONFIG_YAML}}
+        run: echo "$CONFIG_YAML" > configs/env/config.yaml
       - name: build docker
         run: docker build -t aprian1337/shiva:1.0.0 .
       - name: Login to Docker Hub
@@ -40,3 +40,27 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: push image to registry docker hub
         run: docker push aprian1337/shiva:1.0.0
+  deploy-to-ec2:
+    name: "Deploy to ec2 from registry docker hub"
+    runs-on: ubuntu-latest
+    needs: build-push-docker
+    steps:
+      - uses: actions/checkout@v2
+      - name: configuration SSH
+        env:
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_AWSPEM }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/shiva.pem
+          chmod 400 ~/.ssh/shiva.pem
+          cat >>~/.ssh/config <<END
+          Host development
+            HostName $SSH_HOST
+            User $SSH_USERNAME
+            IdentityFile ~/.ssh/shiva.pem
+            StrictHostKeyChecking=no
+          END
+      - name: Connect EC2 & Remove All Container & Pull from Registry & Start
+        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull aprian1337/shiva:1.0.0 && docker run -d -p 8080:1111 --name shiva aprian1337/shiva:1.0.0'
