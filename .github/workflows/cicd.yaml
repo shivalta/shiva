@@ -55,7 +55,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_KEY" > ~/.ssh/shiva.pem
           chmod 400 ~/.ssh/shiva.pem
-          cat >>~/.ssh/config <<END
+          cat >>~/.ssh/shiva.pem <<END
           Host development
             HostName $SSH_HOST
             User $SSH_USERNAME
