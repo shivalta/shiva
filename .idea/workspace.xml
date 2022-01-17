@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: get all data users endpoint" />
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix: update endpoint users">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/delivery/http.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/delivery/http.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/kong-setup" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/cicd_setup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -65,6 +69,7 @@
       <recent name="$PROJECT_DIR$/configs/env" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/cmd/http/middleware" />
       <recent name="$PROJECT_DIR$/utils/baseResponse" />
       <recent name="$PROJECT_DIR$/internal/accounts/delivery" />
     </key>
@@ -89,7 +94,10 @@
     <MESSAGE value="init" />
     <MESSAGE value="init boilerplate" />
     <MESSAGE value="feat: get all data users endpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: get all data users endpoint" />
+    <MESSAGE value="feat: create user" />
+    <MESSAGE value="fix: import cycle in middleware" />
+    <MESSAGE value="fix: update endpoint users" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: update endpoint users" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
