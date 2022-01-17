@@ -9,7 +9,7 @@ on:
       - 'main'
 
 jobs:
-  Unit-test-and-build-go:
+  unit-test:
     name: "unit test"
     runs-on: ubuntu-latest
     steps:
