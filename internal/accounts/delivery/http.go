@@ -26,10 +26,7 @@ func (h *Http) Login(c echo.Context) error {
 		return err
 	}
 	res, err := h.usecase.Login(req.Email, req.Password)
-	return c.JSON(http.StatusAccepted, map[string]interface{}{
-		"message": "login successfuly!",
-		"data":    res,
-	})
+	return baseResponse.SuccessResponse(c, res, "login successfuly!")
 }
 
 func (h *Http) GetAll(c echo.Context) error {

@@ -8,8 +8,7 @@ import (
 )
 
 func init() {
-	//viper.SetConfigFile(`configs/env/config.yaml`)
-	viper.SetConfigFile(`configs/env/config.local.yaml`)
+	viper.SetConfigFile(`configs/env/config.yaml`)
 	err := viper.ReadInConfig()
 	if err != nil {
 		panic(err)
