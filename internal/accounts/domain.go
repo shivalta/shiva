@@ -7,6 +7,7 @@ type Domain struct {
 	Handphone  string
 	Address    string
 	IsAdmin    bool
+	IsActive   bool
 	Password   string
 	Repassword string
 }

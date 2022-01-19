@@ -6,15 +6,6 @@ import (
 	"time"
 )
 
-//type Admin struct {
-//	gorm.Model
-//	Name      string    `gorm:"omitempty"`
-//	Email     string    `gorm:"omitempty"`
-//	Password  string    `gorm:"omitempty"`
-//	CreatedAt time.Time `gorm:"autoCreateTime"`
-//	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-//}
-
 type Users struct {
 	gorm.Model
 	Name      string    `gorm:"omitempty"`
@@ -23,18 +14,10 @@ type Users struct {
 	Address   string    `gorm:"omitempty"`
 	Password  string    `gorm:"omitempty"`
 	IsAdmin   bool      `gorm:"omitempty"`
+	IsActive  bool      `gorm:"omitempty"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
-
-//type ResetPasswords struct {
-//	gorm.Model
-//	UserId    int64
-//	Users     Users     `gorm:"foreignKey:UserId"`
-//	Status    int32     `gorm:"omitempty"`
-//	CreatedAt time.Time `gorm:"autoCreateTime"`
-//	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-//}
 
 func FromDomain(u accounts.Domain) Users {
 	return Users{
@@ -44,6 +27,7 @@ func FromDomain(u accounts.Domain) Users {
 		Address:   u.Address,
 		Password:  u.Password,
 		IsAdmin:   u.IsAdmin,
+		IsActive:  u.IsActive,
 	}
 }
 
@@ -56,6 +40,7 @@ func (u *Users) UserToDomain() accounts.Domain {
 		Address:   u.Address,
 		Password:  u.Password,
 		IsAdmin:   u.IsAdmin,
+		IsActive:  u.IsActive,
 	}
 }
 
