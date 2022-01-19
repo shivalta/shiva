@@ -2,7 +2,6 @@ package http
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/factory"
 )
@@ -11,13 +10,10 @@ func InitHttp() {
 	f := factory.InitFactoryHTTP()
 
 	e := echo.New()
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	}))
+
 	middlewares.InitMiddleware(e)
 
-	v1 := e.Group("api/v1/")
+	v1 := e.Group("api/v1")
 	v1.POST("/auth/login", f.Accounts.Login)
 
 	v1.GET("/users", f.Accounts.GetAll)

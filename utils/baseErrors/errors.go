@@ -10,6 +10,7 @@ var (
 	ErrUserEmailUsed          = errors.New("email is has been used")
 	ErrUsersNameRequired      = errors.New("name is required")
 	ErrUsersHandphoneRequired = errors.New("handphone is required")
+	ErrUsersReqNotValid       = errors.New("request not valid")
 	ErrUsersAddressquired     = errors.New("address is required")
 	ErrUsersPasswordRequired  = errors.New("password is required")
 	ErrInvalidPassword        = errors.New("password invalid")
