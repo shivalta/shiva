@@ -4,6 +4,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"log"
 	"shiva/shiva-auth/cmd/http/middlewares"
+	"shiva/shiva-auth/helpers/smtpEmail"
 	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/utils/baseErrors"
 	"shiva/shiva-auth/utils/hash"
@@ -103,6 +104,10 @@ func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err
 	}
 	user.Password = hashPass
 	res, err := uc.data.Create(user)
+	err = smtpEmail.SendMail([]string{"naufalghaniachmani@gmail.com", "dwikyapriyan@gmail.com"}, "Email Registration Confirm", user.Name+" has register! :)")
+	if err != nil {
+		return accounts.Domain{}, baseErrors.ErrEmailSmtp
+	}
 	return res, nil
 }
 

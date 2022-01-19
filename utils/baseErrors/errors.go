@@ -15,6 +15,7 @@ var (
 	ErrInvalidPassword        = errors.New("password invalid")
 	ErrUsersEmailRequired     = errors.New("email is required")
 	ErrInvalidTokenCredential = errors.New("token not found or expired")
+	ErrEmailSmtp              = errors.New("email not send :(")
 
 	ErrIDNotFound             = errors.New("id not found")
 	ErrInvalidId              = errors.New("invalid id, id not numeric")

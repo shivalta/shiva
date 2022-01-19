@@ -26,6 +26,9 @@ func (h *Http) Login(c echo.Context) error {
 		return err
 	}
 	res, err := h.usecase.Login(req.Email, req.Password)
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
 	return baseResponse.SuccessResponse(c, res, "login successfuly!")
 }
 
@@ -33,7 +36,7 @@ func (h *Http) GetAll(c echo.Context) error {
 	search := c.QueryParam("search")
 	data, err := h.usecase.GetAll(search)
 	if err != nil {
-
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return baseResponse.SuccessResponse(c, FromListDomain(data), "success get all data user")
 }
@@ -45,10 +48,10 @@ func (h *Http) Create(c echo.Context) error {
 		return err
 	}
 	res, err := h.usecase.Create(req.ToDomain())
-	return c.JSON(http.StatusAccepted, map[string]interface{}{
-		"message": "success",
-		"data":    FromDomain(res),
-	})
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return baseResponse.SuccessResponse(c, FromDomain(res), "user has been registered!")
 }
 
 func (h *Http) Update(c echo.Context) error {
@@ -79,7 +82,7 @@ func (h *Http) Delete(c echo.Context) error {
 	}
 	err = h.usecase.Delete(convUserId)
 	if err != nil {
-		return err
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return baseResponse.SuccessResponse(c, convUserId, "delete successfuly")
 }
@@ -93,7 +96,7 @@ func (h *Http) GetById(c echo.Context) error {
 	}
 	res, err := h.usecase.GetById(convUserId)
 	if err != nil {
-		return err
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return baseResponse.SuccessResponse(c, FromDomain(res), "get data successfuly")
 }
