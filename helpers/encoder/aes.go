@@ -32,19 +32,19 @@ func AesEncrypt(stringToEncrypt string, keyString string) (encryptedString strin
 	return fmt.Sprintf("%x", ciphertext)
 }
 
-func AesDecrypt(encryptedString string, keyString string) (decryptedString string) {
+func AesDecrypt(encryptedString string, keyString string) (string, error) {
 
 	key, _ := hex.DecodeString(keyString)
 	enc, _ := hex.DecodeString(encryptedString)
 
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		panic(err.Error())
+		return "", err
 	}
 
 	aesGCM, err := cipher.NewGCM(block)
 	if err != nil {
-		panic(err.Error())
+		return "", err
 	}
 
 	nonceSize := aesGCM.NonceSize()
@@ -53,8 +53,8 @@ func AesDecrypt(encryptedString string, keyString string) (decryptedString strin
 
 	plaintext, err := aesGCM.Open(nil, nonce, ciphertext, nil)
 	if err != nil {
-		panic(err.Error())
+		return "", err
 	}
 
-	return fmt.Sprintf("%s", plaintext)
+	return fmt.Sprintf("%s", plaintext), nil
 }

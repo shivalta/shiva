@@ -4,10 +4,18 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix: smtp all clear">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/smtpEmail/smtp.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/smtpEmail/smtp.go" afterDir="false" />
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="add: encode helper">
+      <change beforePath="$PROJECT_DIR$/cmd/http/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/http/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/driver/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/driver/postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/env/config.yaml.example" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env/config.yaml.example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/encoder/aes.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/encoder/aes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/encoder/encoder.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/encoder/encoder.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/delivery/http.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/delivery/http.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/delivery/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/delivery/request.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/baseErrors/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/baseErrors/errors.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/fix_cors" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/smtp" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,6 +77,7 @@
       <recent name="$PROJECT_DIR$/configs/env" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/helpers" />
       <recent name="$PROJECT_DIR$/cmd/http/middleware" />
       <recent name="$PROJECT_DIR$/utils/baseResponse" />
       <recent name="$PROJECT_DIR$/internal/accounts/delivery" />
@@ -104,7 +113,8 @@
     <MESSAGE value="fix: user create error response" />
     <MESSAGE value="fix: debug smtp err" />
     <MESSAGE value="fix: smtp all clear" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: smtp all clear" />
+    <MESSAGE value="add: encode helper" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: encode helper" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

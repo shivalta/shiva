@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-func EncodeEmailVerify(str string) string {
+func EncodeUrlEmailVerify(str string) string {
 	encode := base64.StdEncoding.EncodeToString([]byte(str))
 	encodeEncrypt := base64.StdEncoding.EncodeToString([]byte(str + viper.GetString(`encrypt.additional`)))
-	return fmt.Sprintf("u=%s&v=%s", encode, AesEncrypt(encodeEncrypt, viper.GetString(`encrypt.keystring`)))
+	return fmt.Sprintf(viper.GetString(`server.address.frontend`)+"/verify?u=%s&v=%s", encode, AesEncrypt(encodeEncrypt, viper.GetString(`encrypt.keystring`)))
 }
 
 func DecodeEmailVerify(email string, verify string) (string, error) {
@@ -18,7 +18,10 @@ func DecodeEmailVerify(email string, verify string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	decrypt := AesDecrypt(verify, viper.GetString(`encrypt.keystring`))
+	decrypt, err := AesDecrypt(verify, viper.GetString(`encrypt.keystring`))
+	if err != nil {
+		return "", err
+	}
 	decodeDecrypt, err := base64.StdEncoding.DecodeString(decrypt)
 	if err != nil {
 		return "", err

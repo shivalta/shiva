@@ -21,7 +21,6 @@ func SetupDatabasePostgres() {
 		viper.GetString(`databases.postgres.sslmode`),
 		viper.GetString(`databases.postgres.timezone`),
 	)
-	fmt.Println(viper.Get("databases.postgres.dbname"))
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	db.Logger = logger.Default.LogMode(logger.Info)
 	if err != nil {

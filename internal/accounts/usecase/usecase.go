@@ -4,6 +4,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"log"
 	"shiva/shiva-auth/cmd/http/middlewares"
+	"shiva/shiva-auth/helpers/encoder"
 	"shiva/shiva-auth/helpers/smtpEmail"
 	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/utils/baseErrors"
@@ -22,6 +23,26 @@ func NewAccountUsecase(r accounts.Repository, jwt *middlewares.ConfigJWT) accoun
 		validate: validator.New(),
 		jwtAuth:  jwt,
 	}
+}
+
+func (uc accountUsecase) Verify(emailBase64 string, encrypt string) (accounts.Domain, error) {
+	email, _ := encoder.DecodeEmailVerify(emailBase64, encrypt)
+	if email == "" {
+		return accounts.Domain{}, baseErrors.ErrInvalidPayload
+	}
+	u, err := uc.data.GetByEmail(email)
+	if err != nil {
+		return accounts.Domain{}, err
+	}
+	if u.ID == 0 {
+		return accounts.Domain{}, baseErrors.ErrUserEmailNotFound
+	}
+	err = uc.data.UpdateStatus(u.ID, true)
+	if err != nil {
+		return accounts.Domain{}, err
+	}
+	u.IsActive = true
+	return u, nil
 }
 
 func (uc accountUsecase) Login(email string, password string) (string, error) {
@@ -94,16 +115,16 @@ func (uc accountUsecase) GetById(id uint) (accounts.Domain, error) {
 	return u, nil
 }
 
-func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err error) {
+func (uc accountUsecase) Create(user accounts.Domain) (accounts.Domain, error) {
 	if user.Password != user.Repassword {
 		return accounts.Domain{}, baseErrors.ErrInvalidPassword
 	}
 	u, err := uc.data.GetByEmail(user.Email)
 	if err != nil {
-		return accounts.Domain{}, baseErrors.ErrUsersReqNotValid
+		return accounts.Domain{}, err
 	}
-	if u.ID == 0 {
-		return accounts.Domain{}, baseErrors.ErrNotFound
+	if u.ID != 0 {
+		return accounts.Domain{}, baseErrors.ErrUserEmailUsed
 	}
 	hashPass, err := hash.HashPassword(user.Password)
 	if err != nil {
@@ -114,7 +135,12 @@ func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err
 	if err != nil {
 		return accounts.Domain{}, err
 	}
-	err = smtpEmail.SendMail([]string{user.Email}, "Email Registration Confirm", user.Name+" has register! :)")
+	url := encoder.EncodeUrlEmailVerify(user.Email)
+	bodyEmail := `
+		<h2>Hello ` + user.Name + `!</h2>
+		Please verify your email with click this link : ` + url +
+		`<br><br>Regards,<br>Shiva Admin`
+	err = smtpEmail.SendMail([]string{user.Email}, "Email Registration Confirm", bodyEmail)
 	if err != nil {
 		return accounts.Domain{}, err
 	}

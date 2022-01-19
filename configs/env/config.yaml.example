@@ -1,0 +1,27 @@
+---
+jwt:
+  secret:
+  expired:
+encrypt:
+  keystring:
+  additional:
+debug: true
+databases:
+  postgres:
+    host:
+    user:
+    password:
+    dbname:
+    port: '5432'
+    sslmode: disable
+    timezone: Asia/Jakarta
+server:
+  address:
+    host:
+    port: '1111'
+smtp:
+  host: smtp.gmail.com
+  port: 587
+  sender_name: Shiva by Alterra Academy <shivalterra27@gmail.com>
+  email:
+  password:
