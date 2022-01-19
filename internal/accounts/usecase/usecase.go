@@ -41,6 +41,10 @@ func (uc accountUsecase) Verify(emailBase64 string, encrypt string) (accounts.Do
 	if err != nil {
 		return accounts.Domain{}, err
 	}
+	bodyEmail := `
+		<h2>Hello ` + u.Name + `!</h2>
+		Your account has been <font color="green"><b>actived</b></font> :)<br><br>Regards,<br>Shiva Admin`
+	err = smtpEmail.SendMail([]string{u.Email}, "Email Verified!", bodyEmail)
 	u.IsActive = true
 	return u, nil
 }
@@ -54,6 +58,9 @@ func (uc accountUsecase) Login(email string, password string) (string, error) {
 	user, err := uc.data.GetByEmail(email)
 	if err != nil {
 		return "", err
+	}
+	if user.IsActive == false {
+		return "", baseErrors.ErrUserNotActive
 	}
 	if !hash.CheckPassword(password, user.Password) {
 		return "", baseErrors.ErrInvalidPassword

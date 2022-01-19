@@ -7,6 +7,8 @@ var (
 	ErrInvalidPayload    = errors.New("invalid payload")
 	ErrInvalidAuth       = errors.New("invalid authentication")
 	ErrUserEmailNotFound = errors.New("email not found")
+	ErrUserNotActive     = errors.New("user is no active :(")
+
 	//USERS MODEL
 	ErrUserEmailRequired      = errors.New("email is required")
 	ErrUserEmailUsed          = errors.New("email is has been used")

@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="add: encode helper">
-      <change beforePath="$PROJECT_DIR$/cmd/http/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/http/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/driver/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/configs/driver/postgres.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/env/config.yaml.example" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env/config.yaml.example" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/encoder/aes.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/encoder/aes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/encoder/encoder.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/encoder/encoder.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/accounts/delivery/http.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/delivery/http.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/accounts/delivery/request.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/delivery/request.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/accounts/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/domain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" afterDir="false" />
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: verify endpoint after register">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/baseErrors/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/baseErrors/errors.go" afterDir="false" />
     </list>
@@ -114,7 +106,8 @@
     <MESSAGE value="fix: debug smtp err" />
     <MESSAGE value="fix: smtp all clear" />
     <MESSAGE value="add: encode helper" />
-    <option name="LAST_COMMIT_MESSAGE" value="add: encode helper" />
+    <MESSAGE value="feat: verify endpoint after register" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: verify endpoint after register" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
