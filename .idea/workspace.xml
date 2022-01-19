@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix : git workflows">
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix: smtp all clear">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helpers/smtpEmail/smtp.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/smtpEmail/smtp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/setup_cicd" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/fix_cors" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -98,7 +100,11 @@
     <MESSAGE value="fix: delete endpoint users" />
     <MESSAGE value="cicd : setup git workflows" />
     <MESSAGE value="fix : git workflows" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix : git workflows" />
+    <MESSAGE value="feat: use smtp utility" />
+    <MESSAGE value="fix: user create error response" />
+    <MESSAGE value="fix: debug smtp err" />
+    <MESSAGE value="fix: smtp all clear" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: smtp all clear" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

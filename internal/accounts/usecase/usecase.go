@@ -98,6 +98,13 @@ func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err
 	if user.Password != user.Repassword {
 		return accounts.Domain{}, baseErrors.ErrInvalidPassword
 	}
+	u, err := uc.data.GetByEmail(user.Email)
+	if err != nil {
+		return accounts.Domain{}, baseErrors.ErrUsersReqNotValid
+	}
+	if u.ID == 0 {
+		return accounts.Domain{}, baseErrors.ErrNotFound
+	}
 	hashPass, err := hash.HashPassword(user.Password)
 	if err != nil {
 		return accounts.Domain{}, nil
@@ -107,7 +114,7 @@ func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err
 	if err != nil {
 		return accounts.Domain{}, err
 	}
-	err = smtpEmail.SendMail([]string{"naufalghaniachmani@gmail.com", "dwikyapriyan@gmail.com", user.Email}, "Email Registration Confirm", user.Name+" has register! :)")
+	err = smtpEmail.SendMail([]string{user.Email}, "Email Registration Confirm", user.Name+" has register! :)")
 	if err != nil {
 		return accounts.Domain{}, err
 	}
