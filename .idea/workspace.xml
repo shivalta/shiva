@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix: delete endpoint users" />
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="fix : git workflows">
+      <change afterPath="$PROJECT_DIR$/helpers/smtpEmail/smtp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/repository/model.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/repository/model.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/repository/postgres.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +33,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/cicd_setup" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/setup_cicd" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -94,7 +100,9 @@
     <MESSAGE value="fix: import cycle in middleware" />
     <MESSAGE value="fix: update endpoint users" />
     <MESSAGE value="fix: delete endpoint users" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: delete endpoint users" />
+    <MESSAGE value="cicd : setup git workflows" />
+    <MESSAGE value="fix : git workflows" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix : git workflows" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>

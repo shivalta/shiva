@@ -46,11 +46,6 @@ func (p *pgAccountRepository) GetById(id uint) (accounts.Domain, error) {
 
 func (p *pgAccountRepository) Update(user accounts.Domain) (accounts.Domain, error) {
 	model := Users{}
-	//p.Psql.First(&model, user.ID)
-	//model.Name = user.Name
-	//model.Address = user.Address
-	//model.Handphone = user.Handphone
-	//p.Psql.Save(&model)
 	e := p.Psql.Model(&model).Where("id = ?", user.ID).Updates(Users{
 		Name:      user.Name,
 		Handphone: user.Handphone,

@@ -1,4 +1,4 @@
-name: Running Unit Test
+name: CI/CD TO AMAZON WEB SERVICE (EC2)
 
 on:
   pull_request:
