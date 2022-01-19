@@ -107,7 +107,7 @@ func (uc accountUsecase) Create(user accounts.Domain) (data accounts.Domain, err
 	if err != nil {
 		return accounts.Domain{}, err
 	}
-	err = smtpEmail.SendMail([]string{"naufalghaniachmani@gmail.com", "dwikyapriyan@gmail.com"}, "Email Registration Confirm", user.Name+" has register! :)")
+	err = smtpEmail.SendMail([]string{"naufalghaniachmani@gmail.com", "dwikyapriyan@gmail.com", user.Email}, "Email Registration Confirm", user.Name+" has register! :)")
 	if err != nil {
 		return accounts.Domain{}, err
 	}
