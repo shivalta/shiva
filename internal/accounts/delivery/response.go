@@ -10,6 +10,18 @@ type Response struct {
 	Address   string `json:"address"`
 }
 
+type ResponseLogin struct {
+	Token string   `json:"token,omitempty"`
+	User  Response `json:"user,omitempty"`
+}
+
+func FromDomainLogin(d accounts.Domain, token string) ResponseLogin {
+	return ResponseLogin{
+		Token: token,
+		User:  FromDomain(d),
+	}
+}
+
 func FromDomain(d accounts.Domain) Response {
 	return Response{
 		ID:        d.ID,

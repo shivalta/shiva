@@ -18,7 +18,7 @@ type Usecase interface {
 	Create(user Domain) (Domain, error)
 	GetAll(search string) ([]Domain, error)
 	GetById(id uint) (Domain, error)
-	Login(email string, password string) (string, error)
+	Login(email string, password string) (Domain, string, error)
 	Verify(emailBase64 string, encrypt string) (Domain, error)
 }
 
