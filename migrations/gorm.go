@@ -2,12 +2,14 @@ package migrations
 
 import (
 	"shiva/shiva-auth/configs/driver"
-	"shiva/shiva-auth/internal/accounts/repository"
+	accounts "shiva/shiva-auth/internal/accounts/repository"
+	class "shiva/shiva-auth/internal/class/repository"
 )
 
 func AutoMigrate() {
 	err := driver.Psql.AutoMigrate(
-		&repository.Users{},
+		&accounts.Users{},
+		&class.ProductClass{},
 	)
 	if err != nil {
 		return
