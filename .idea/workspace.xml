@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2fa769a1-089d-4ad3-8f0a-1f3d9339c142" name="Changes" comment="cleanup: response login and base error response">
-      <change afterPath="$PROJECT_DIR$/internal/class/delivery/http.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/delivery/request.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/delivery/response.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/domain.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/repository/model.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/repository/postgres.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/class/usecase/usecase.go" afterDir="false" />
+    <list default="true" id="2fa769a1-089d-4ad3-8f0a-1f3d9339c142" name="Changes" comment="add: domain product class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/class/domain.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/class/domain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/class/repository/postgres.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/class/repository/postgres.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/class/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/class/usecase/usecase.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +30,14 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
@@ -80,7 +84,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="cleanup: response login and base error response" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup: response login and base error response" />
+    <MESSAGE value="feat: add domain product class" />
+    <MESSAGE value="add: domain product class" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: domain product class" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
