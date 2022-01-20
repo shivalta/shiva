@@ -28,7 +28,7 @@ func (h *Http) Login(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, res, "login successfuly!")
+	return baseResponse.SuccessResponse(c, res, "login berhasil!")
 }
 
 func (h *Http) GetAll(c echo.Context) error {
@@ -37,7 +37,7 @@ func (h *Http) GetAll(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromListDomain(data), "success get all data user")
+	return baseResponse.SuccessResponse(c, FromListDomain(data), "sukses mendapatkan seluruh data user")
 }
 
 func (h *Http) Create(c echo.Context) error {
@@ -50,12 +50,12 @@ func (h *Http) Create(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "user has been registered!")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "pendaftaran telah berhasil, silakan cek email untuk verifikasi!")
 }
 
 func (h *Http) Update(c echo.Context) error {
-	userId := c.Param("userId")
-	convUserId, err := converter.StringToUint(userId)
+	id := c.Param("id")
+	convId, err := converter.StringToUint(id)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
@@ -65,12 +65,12 @@ func (h *Http) Update(c echo.Context) error {
 		return err
 	}
 	req := tempReq.ToDomain()
-	req.ID = convUserId
+	req.ID = convId
 	res, err := h.usecase.Update(req)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "update successfuly!")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "update data berhasil!")
 }
 
 func (h *Http) Delete(c echo.Context) error {
@@ -96,7 +96,7 @@ func (h *Http) GetById(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "get data successfuly")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "berhasil mendapatkan data!")
 }
 
 func (h *Http) Verify(c echo.Context) error {
@@ -112,5 +112,5 @@ func (h *Http) Verify(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(v), "user has been verified!")
+	return baseResponse.SuccessResponse(c, FromDomain(v), "akun berhasil diverifikasi!")
 }

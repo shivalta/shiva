@@ -7,10 +7,15 @@ import (
 	d_accounts "shiva/shiva-auth/internal/accounts/delivery"
 	r_accounts "shiva/shiva-auth/internal/accounts/repository"
 	u_accounts "shiva/shiva-auth/internal/accounts/usecase"
+
+	d_class "shiva/shiva-auth/internal/class/delivery"
+	r_class "shiva/shiva-auth/internal/class/repository"
+	u_class "shiva/shiva-auth/internal/class/usecase"
 )
 
 type PresenterHTTP struct {
 	Accounts *d_accounts.Http
+	Class    *d_class.Http
 }
 
 func InitFactoryHTTP() PresenterHTTP {
@@ -22,7 +27,12 @@ func InitFactoryHTTP() PresenterHTTP {
 	accountsRepo := r_accounts.NewAccountRepo(driver.Psql)
 	accountsUsecase := u_accounts.NewAccountUsecase(accountsRepo, &configJWT)
 	accountsDelivery := d_accounts.NewAccountsHandler(accountsUsecase)
+
+	classRepo := r_class.NewClassRepo(driver.Psql)
+	classUsecase := u_class.NewClassUsecase(classRepo)
+	classDelivery := d_class.NewClassHandler(classUsecase)
 	return PresenterHTTP{
 		Accounts: accountsDelivery,
+		Class:    classDelivery,
 	}
 }
