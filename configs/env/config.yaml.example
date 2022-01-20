@@ -18,6 +18,7 @@ databases:
 server:
   address:
     host:
+    frontend:
     port: '1111'
 smtp:
   host: smtp.gmail.com
