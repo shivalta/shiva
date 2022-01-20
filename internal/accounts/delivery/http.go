@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"shiva/shiva-auth/internal/accounts"
+	"shiva/shiva-auth/utils/baseErrors"
 	"shiva/shiva-auth/utils/baseResponse"
 	"shiva/shiva-auth/utils/converter"
 )
@@ -26,7 +27,13 @@ func (h *Http) Login(c echo.Context) error {
 	}
 	user, token, err := h.usecase.Login(req.Email, req.Password)
 	if err != nil {
-		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		if err == baseErrors.ErrUsersPasswordRequired || err == baseErrors.ErrUserEmailRequired {
+			return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
+		} else if err == baseErrors.ErrUserNotActive || err == baseErrors.ErrInvalidPassword || err == baseErrors.ErrInvalidAuth {
+			return baseResponse.ErrorResponse(c, http.StatusForbidden, err)
+		} else {
+			return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		}
 	}
 	return baseResponse.SuccessResponse(c, FromDomainLogin(user, token), "login telah berhasil!")
 }
