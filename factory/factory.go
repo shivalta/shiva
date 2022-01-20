@@ -24,6 +24,10 @@ func InitFactoryHTTP() PresenterHTTP {
 		ExpiresDuration: viper.GetInt(`jwt.expired`),
 	}
 
+	//just implement this uploader inner usecase for upload to s3 bucket
+	//s3 := driver.ConnectAws()
+	//uploader := s3manager.NewUploader(s3)
+
 	accountsRepo := r_accounts.NewAccountRepo(driver.Psql)
 	accountsUsecase := u_accounts.NewAccountUsecase(accountsRepo, &configJWT)
 	accountsDelivery := d_accounts.NewAccountsHandler(accountsUsecase)
