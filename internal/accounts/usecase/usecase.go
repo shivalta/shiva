@@ -49,21 +49,21 @@ func (uc accountUsecase) Verify(emailBase64 string, encrypt string) (accounts.Do
 	return u, nil
 }
 
-func (uc accountUsecase) Login(email string, password string) (string, error) {
+func (uc accountUsecase) Login(email string, password string) (accounts.Domain, string, error) {
 	if password == "" {
-		return "", baseErrors.ErrUsersPasswordRequired
+		return accounts.Domain{}, "", baseErrors.ErrUsersPasswordRequired
 	} else if email == "" {
-		return "", baseErrors.ErrUserEmailRequired
+		return accounts.Domain{}, "", baseErrors.ErrUserEmailRequired
 	}
 	user, err := uc.data.GetByEmail(email)
 	if err != nil {
-		return "", err
+		return accounts.Domain{}, "", err
 	}
 	if user.IsActive == false {
-		return "", baseErrors.ErrUserNotActive
+		return accounts.Domain{}, "", baseErrors.ErrUserNotActive
 	}
 	if !hash.CheckPassword(password, user.Password) {
-		return "", baseErrors.ErrInvalidPassword
+		return accounts.Domain{}, "", baseErrors.ErrInvalidPassword
 	}
 
 	token, err := uc.jwtAuth.GenerateTokenJWT(user.ID, user.IsAdmin)
@@ -71,9 +71,9 @@ func (uc accountUsecase) Login(email string, password string) (string, error) {
 		log.Println(err)
 	}
 	if token == "" {
-		return "", baseErrors.ErrInvalidAuth
+		return accounts.Domain{}, "", baseErrors.ErrInvalidAuth
 	}
-	return token, nil
+	return user, token, nil
 }
 
 func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
