@@ -30,7 +30,7 @@ func (h *Http) Login(c echo.Context) error {
 		if err == baseErrors.ErrUsersPasswordRequired || err == baseErrors.ErrUserEmailRequired {
 			return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 		} else if err == baseErrors.ErrUserNotActive || err == baseErrors.ErrInvalidPassword || err == baseErrors.ErrInvalidAuth {
-			return baseResponse.ErrorResponse(c, http.StatusForbidden, err)
+			return baseResponse.ErrorResponse(c, http.StatusOK, err)
 		} else {
 			return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 		}
