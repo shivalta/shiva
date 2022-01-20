@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"shiva/shiva-auth/internal/accounts"
+	"shiva/shiva-auth/utils/baseErrors"
 	"shiva/shiva-auth/utils/baseResponse"
 	"shiva/shiva-auth/utils/converter"
 )
@@ -24,11 +25,17 @@ func (h *Http) Login(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	res, err := h.usecase.Login(req.Email, req.Password)
+	user, token, err := h.usecase.Login(req.Email, req.Password)
 	if err != nil {
-		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		if err == baseErrors.ErrUsersPasswordRequired || err == baseErrors.ErrUserEmailRequired {
+			return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
+		} else if err == baseErrors.ErrUserNotActive || err == baseErrors.ErrInvalidPassword || err == baseErrors.ErrInvalidAuth {
+			return baseResponse.ErrorResponse(c, http.StatusOK, err)
+		} else {
+			return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		}
 	}
-	return baseResponse.SuccessResponse(c, res, "login successfuly!")
+	return baseResponse.SuccessResponse(c, FromDomainLogin(user, token), "login telah berhasil!")
 }
 
 func (h *Http) GetAll(c echo.Context) error {
@@ -37,7 +44,7 @@ func (h *Http) GetAll(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromListDomain(data), "success get all data user")
+	return baseResponse.SuccessResponse(c, FromListDomain(data), "sukses mendapatkan seluruh data user!")
 }
 
 func (h *Http) Create(c echo.Context) error {
@@ -50,7 +57,7 @@ func (h *Http) Create(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "user has been registered!")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "pendaftaran telah berhasil, silakan cek email untuk verifikasi!")
 }
 
 func (h *Http) Update(c echo.Context) error {
@@ -70,7 +77,7 @@ func (h *Http) Update(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "update successfuly!")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "kamu telah berhasil update data!")
 }
 
 func (h *Http) Delete(c echo.Context) error {
@@ -83,7 +90,7 @@ func (h *Http) Delete(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, convUserId, "delete successfuly")
+	return baseResponse.SuccessResponse(c, convUserId, "kamu telah berhasil menghapus akun!")
 }
 
 func (h *Http) GetById(c echo.Context) error {
@@ -96,7 +103,7 @@ func (h *Http) GetById(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "get data successfuly")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "berhasil mendapatkan data!")
 }
 
 func (h *Http) Verify(c echo.Context) error {
@@ -112,5 +119,5 @@ func (h *Http) Verify(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(v), "user has been verified!")
+	return baseResponse.SuccessResponse(c, FromDomain(v), "akun telah berhasil diverifikasi!")
 }
