@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: send email after verify &amp; restrict login only user is active">
+    <list default="true" id="2fa769a1-089d-4ad3-8f0a-1f3d9339c142" name="Changes" comment="cleanup: response login and base error response">
+      <change afterPath="$PROJECT_DIR$/internal/class/delivery/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/delivery/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/delivery/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/repository/model.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/repository/postgres.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/class/usecase/usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,33 +26,20 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file:///snap/go/8839" />
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="master" />
-  </component>
-  <component name="Git.Rebase.Settings">
-    <option name="NEW_BASE" value="origin/main" />
-  </component>
+  <component name="GOROOT" url="file:///snap/go/current" />
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/smtp" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/cleanup_response" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="false" />
   </component>
-  <component name="ProjectId" id="231IBtKEnLXg4qmIE9GuEFee9Sd" />
+  <component name="ProjectId" id="23xM5FWMH57uQaQLzV6rYJ7GJQp" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -59,18 +53,13 @@
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../kafka-example-master" />
-    <property name="settings.editor.selected.configurable" value="go.vgo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/internal/products" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/products" />
+      <recent name="$PROJECT_DIR$/internal/categories" />
       <recent name="$PROJECT_DIR$/configs/env" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/helpers" />
-      <recent name="$PROJECT_DIR$/cmd/http/middleware" />
-      <recent name="$PROJECT_DIR$/utils/baseResponse" />
-      <recent name="$PROJECT_DIR$/internal/accounts/delivery" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -90,23 +79,8 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="init" />
-    <MESSAGE value="init boilerplate" />
-    <MESSAGE value="feat: get all data users endpoint" />
-    <MESSAGE value="feat: create user" />
-    <MESSAGE value="fix: import cycle in middleware" />
-    <MESSAGE value="fix: update endpoint users" />
-    <MESSAGE value="fix: delete endpoint users" />
-    <MESSAGE value="cicd : setup git workflows" />
-    <MESSAGE value="fix : git workflows" />
-    <MESSAGE value="feat: use smtp utility" />
-    <MESSAGE value="fix: user create error response" />
-    <MESSAGE value="fix: debug smtp err" />
-    <MESSAGE value="fix: smtp all clear" />
-    <MESSAGE value="add: encode helper" />
-    <MESSAGE value="feat: verify endpoint after register" />
-    <MESSAGE value="feat: send email after verify &amp; restrict login only user is active" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: send email after verify &amp; restrict login only user is active" />
+    <MESSAGE value="cleanup: response login and base error response" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup: response login and base error response" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
