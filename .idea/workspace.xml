@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: send email after verify &amp; restrict login only user is active">
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="add: s3 bucket integration">
+      <change afterPath="$PROJECT_DIR$/configs/driver/aws.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/s3/bucket.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/factory/factory.go" beforeDir="false" afterPath="$PROJECT_DIR$/factory/factory.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +34,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="aprian1337/smtp" />
+        <entry key="$PROJECT_DIR$" value="aprian1337/product_class" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,6 +51,7 @@
     <option name="indexEntireGoPath" value="false" />
   </component>
   <component name="ProjectId" id="231IBtKEnLXg4qmIE9GuEFee9Sd" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -106,7 +112,8 @@
     <MESSAGE value="add: encode helper" />
     <MESSAGE value="feat: verify endpoint after register" />
     <MESSAGE value="feat: send email after verify &amp; restrict login only user is active" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: send email after verify &amp; restrict login only user is active" />
+    <MESSAGE value="add: s3 bucket integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="add: s3 bucket integration" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
