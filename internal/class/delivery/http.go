@@ -29,12 +29,12 @@ func (h *Http) GetAll(c echo.Context) error {
 }
 
 func (h *Http) GetById(c echo.Context) error {
-	userId := c.Param("userId")
-	convUserId, err := converter.StringToUint(userId)
+	id := c.Param("id")
+	convId, err := converter.StringToUint(id)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	res, err := h.usecase.GetById(convUserId)
+	res, err := h.usecase.GetById(convId)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
@@ -55,8 +55,8 @@ func (h *Http) Create(c echo.Context) error {
 }
 
 func (h *Http) Update(c echo.Context) error {
-	userId := c.Param("userId")
-	convUserId, err := converter.StringToUint(userId)
+	id := c.Param("id")
+	convId, err := converter.StringToUint(id)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
@@ -66,7 +66,7 @@ func (h *Http) Update(c echo.Context) error {
 		return err
 	}
 	req := tempReq.ToDomain()
-	req.ID = convUserId
+	req.ID = convId
 	res, err := h.usecase.Update(req)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
@@ -75,14 +75,14 @@ func (h *Http) Update(c echo.Context) error {
 }
 
 func (h *Http) Delete(c echo.Context) error {
-	userId := c.Param("userId")
-	convUserId, err := converter.StringToUint(userId)
+	id := c.Param("id")
+	convId, err := converter.StringToUint(id)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	err = h.usecase.Delete(convUserId)
+	err = h.usecase.Delete(convId)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, convUserId, "delete successfuly")
+	return baseResponse.SuccessResponse(c, convId, "delete successfuly")
 }
