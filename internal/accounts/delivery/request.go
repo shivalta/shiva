@@ -10,6 +10,10 @@ type Request struct {
 	Password   string `json:"password"`
 	Repassword string `json:"repassword"`
 }
+type RequestVerify struct {
+	Email  string `json:"u"`
+	Verify string `json:"v"`
+}
 
 type RequestLogin struct {
 	Email    string `json:"email"`

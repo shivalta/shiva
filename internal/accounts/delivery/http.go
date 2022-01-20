@@ -2,7 +2,6 @@ package delivery
 
 import (
 	"github.com/labstack/echo/v4"
-	"log"
 	"net/http"
 	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/utils/baseResponse"
@@ -71,7 +70,7 @@ func (h *Http) Update(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "update successfuly")
+	return baseResponse.SuccessResponse(c, FromDomain(res), "update successfuly!")
 }
 
 func (h *Http) Delete(c echo.Context) error {
@@ -88,7 +87,6 @@ func (h *Http) Delete(c echo.Context) error {
 }
 
 func (h *Http) GetById(c echo.Context) error {
-	log.Println("Z")
 	userId := c.Param("userId")
 	convUserId, err := converter.StringToUint(userId)
 	if err != nil {
@@ -99,4 +97,20 @@ func (h *Http) GetById(c echo.Context) error {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return baseResponse.SuccessResponse(c, FromDomain(res), "get data successfuly")
+}
+
+func (h *Http) Verify(c echo.Context) error {
+	req := RequestVerify{}
+	err := c.Bind(&req)
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
+	}
+	v, err := h.usecase.Verify(req.Email, req.Verify)
+	if err != nil {
+		return err
+	}
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return baseResponse.SuccessResponse(c, FromDomain(v), "user has been verified!")
 }

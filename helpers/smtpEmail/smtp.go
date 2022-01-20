@@ -9,7 +9,7 @@ import (
 )
 
 func SendMail(mailTo []string, subject string, message string) error {
-	bcc := []string{"dwiky.dev@gmail.com"}
+	bcc := []string{"dwiky.dev@gmail.com", "naufalghaniachmani@gmail.com"}
 	mime := "\r\n" + "MIME-Version: 1.0\r\n" + "Content-Type: text/html; charset=\"utf-8\"\r\n\r\n"
 	body := "From: " + viper.GetString(`smtp.sender_name`) + "\n" +
 		"To: " + strings.Join(mailTo, ",") + "\n" +

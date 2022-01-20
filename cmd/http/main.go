@@ -15,6 +15,7 @@ func InitHttp() {
 
 	v1 := e.Group("api/v1")
 	v1.POST("/auth/login", f.Accounts.Login)
+	v1.POST("/verify", f.Accounts.Verify)
 
 	v1.GET("/users", f.Accounts.GetAll)
 	v1.POST("/users", f.Accounts.Create)
