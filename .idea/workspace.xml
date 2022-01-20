@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: verify endpoint after register">
+    <list default="true" id="b7ea2578-555d-4745-8a94-3750bad2d7e2" name="Changes" comment="feat: send email after verify &amp; restrict login only user is active">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/accounts/usecase/usecase.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/baseErrors/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/baseErrors/errors.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +105,8 @@
     <MESSAGE value="fix: smtp all clear" />
     <MESSAGE value="add: encode helper" />
     <MESSAGE value="feat: verify endpoint after register" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: verify endpoint after register" />
+    <MESSAGE value="feat: send email after verify &amp; restrict login only user is active" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: send email after verify &amp; restrict login only user is active" />
   </component>
   <component name="VgoProject">
     <integration-enabled>true</integration-enabled>
