@@ -61,7 +61,7 @@ func (h *Http) Create(c echo.Context) error {
 }
 
 func (h *Http) Update(c echo.Context) error {
-	id := c.Param("id")
+	id := c.Param("userId")
 	convId, err := converter.StringToUint(id)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
