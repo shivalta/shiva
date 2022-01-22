@@ -5,20 +5,23 @@ import (
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/helpers/s3"
 	"shiva/shiva-auth/internal/categories"
+	"shiva/shiva-auth/internal/class"
 	"shiva/shiva-auth/utils/baseErrors"
 )
 
 type Usecase struct {
-	data     categories.Repository
-	validate *validator.Validate
-	uploader *s3manager.Uploader
+	data         categories.Repository
+	validate     *validator.Validate
+	uploader     *s3manager.Uploader
+	classUsecase class.Usecase
 }
 
-func NewCategoriesUsecase(r categories.Repository, uploader *s3manager.Uploader) categories.Usecase {
+func NewCategoriesUsecase(r categories.Repository, uploader *s3manager.Uploader, classUsecase class.Usecase) categories.Usecase {
 	return &Usecase{
-		data:     r,
-		validate: validator.New(),
-		uploader: uploader,
+		data:         r,
+		validate:     validator.New(),
+		uploader:     uploader,
+		classUsecase: classUsecase,
 	}
 }
 
@@ -41,6 +44,10 @@ func (uc Usecase) GetById(id uint) (categories.Domain, error) {
 }
 
 func (uc Usecase) Create(d categories.Domain) (categories.Domain, error) {
+	_, err := uc.classUsecase.GetById(d.ProductClassId)
+	if err != nil {
+		return categories.Domain{}, err
+	}
 	img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
 	d.ImageUrl = img.Location
 	cls, err := uc.data.Create(d)
@@ -51,6 +58,13 @@ func (uc Usecase) Create(d categories.Domain) (categories.Domain, error) {
 }
 
 func (uc Usecase) Update(d categories.Domain) (categories.Domain, error) {
+	_, err := uc.data.GetById(d.ID)
+	if err != nil {
+		if err == baseErrors.ErrRecordNotFound {
+			return categories.Domain{}, baseErrors.ErrRecordNotFound
+		}
+		return categories.Domain{}, err
+	}
 	if d.ImageHeader != nil {
 		img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
 		d.ImageUrl = img.Location
@@ -58,12 +72,14 @@ func (uc Usecase) Update(d categories.Domain) (categories.Domain, error) {
 		if err != nil {
 			return categories.Domain{}, err
 		}
+		data.ID = d.ID
 		return data, nil
 	} else {
 		data, err := uc.data.UpdateWithoutImage(d)
 		if err != nil {
 			return categories.Domain{}, err
 		}
+		data.ID = d.ID
 		return data, nil
 	}
 }

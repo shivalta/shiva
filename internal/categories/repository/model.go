@@ -21,20 +21,23 @@ type ProductCategories struct {
 
 func FromDomain(u categories.Domain) ProductCategories {
 	return ProductCategories{
-		Name:      u.Name,
-		Image:     u.ImageUrl,
-		Tax:       u.Tax,
-		CreatedAt: time.Time{},
-		UpdatedAt: time.Time{},
+		ProductClassId: u.ProductClassId,
+		Name:           u.Name,
+		Image:          u.ImageUrl,
+		Tax:            u.Tax,
+		CreatedAt:      time.Time{},
+		UpdatedAt:      time.Time{},
 	}
 }
 
 func (u *ProductCategories) ToDomain() categories.Domain {
 	return categories.Domain{
-		Name:     u.Name,
-		ImageUrl: u.Image,
-		Slug:     strings.ToLower(strings.ReplaceAll(u.Name, " ", "-")),
-		Tax:      u.Tax,
+		ID:             u.ID,
+		Name:           u.Name,
+		ProductClassId: u.ProductClassId,
+		ImageUrl:       u.Image,
+		Slug:           strings.ToLower(strings.ReplaceAll(u.Name, " ", "-")),
+		Tax:            u.Tax,
 	}
 }
 

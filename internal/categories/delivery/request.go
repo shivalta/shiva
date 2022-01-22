@@ -6,7 +6,7 @@ import (
 )
 
 type Request struct {
-	ProductClassId uint    `param: "product_class_id"`
+	ProductClassId uint    `json:"product_class_id" form:"product_class_id"`
 	Name           string  `json:"name,omitempty" form:"name"`
 	Tax            float32 `json:"tax" form:"tax"`
 }

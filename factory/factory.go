@@ -11,11 +11,16 @@ import (
 	d_class "shiva/shiva-auth/internal/class/delivery"
 	r_class "shiva/shiva-auth/internal/class/repository"
 	u_class "shiva/shiva-auth/internal/class/usecase"
+
+	d_categories "shiva/shiva-auth/internal/categories/delivery"
+	r_categories "shiva/shiva-auth/internal/categories/repository"
+	u_categories "shiva/shiva-auth/internal/categories/usecase"
 )
 
 type PresenterHTTP struct {
-	Accounts *d_accounts.Http
-	Class    *d_class.Http
+	Accounts   *d_accounts.Http
+	Categories *d_categories.Http
+	Class      *d_class.Http
 }
 
 func InitFactoryHTTP() PresenterHTTP {
@@ -31,8 +36,14 @@ func InitFactoryHTTP() PresenterHTTP {
 	classRepo := r_class.NewClassRepo(driver.Psql)
 	classUsecase := u_class.NewClassUsecase(classRepo, driver.S3Uploader)
 	classDelivery := d_class.NewClassHandler(classUsecase)
+
+	categoriesRepo := r_categories.NewCategoriesRepo(driver.Psql)
+	categoriesUsecase := u_categories.NewCategoriesUsecase(categoriesRepo, driver.S3Uploader, classUsecase)
+	categoriesDelivery := d_categories.NewCategoriesHandler(categoriesUsecase)
+
 	return PresenterHTTP{
-		Accounts: accountsDelivery,
-		Class:    classDelivery,
+		Accounts:   accountsDelivery,
+		Class:      classDelivery,
+		Categories: categoriesDelivery,
 	}
 }

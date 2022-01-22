@@ -7,7 +7,7 @@ import (
 type Response struct {
 	ID    uint    `json:"id"`
 	Name  string  `json:"name"`
-	Image string  `json:"image"`
+	Image string  `json:"image,omitempty"`
 	Tax   float32 `json:"tax"`
 	Slug  string  `json:"slug"`
 }

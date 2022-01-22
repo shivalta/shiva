@@ -16,13 +16,20 @@ func NewCategoriesRepo(psql *gorm.DB) categories.Repository {
 }
 
 func (p *pgCategoriesRepo) GetAll(search string, key string) ([]categories.Domain, error) {
-	var user []ProductCategories
-	err := p.Psql.Find(&user)
+	var model []ProductCategories
+	if key == "" {
+		err := p.Psql.Find(&model)
+		if err.Error != nil {
+			return []categories.Domain{}, err.Error
+		}
+		return ToDomainList(model), nil
+	}
+	err := p.Psql.Find(&model, key+` = ?`, search)
 
 	if err.Error != nil {
 		return []categories.Domain{}, err.Error
 	}
-	return ToDomainList(user), nil
+	return ToDomainList(model), nil
 }
 
 func (p *pgCategoriesRepo) GetById(id uint) (categories.Domain, error) {

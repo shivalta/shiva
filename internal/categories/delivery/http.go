@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"shiva/shiva-auth/internal/categories"
@@ -25,7 +26,7 @@ func (h *Http) GetAll(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromListDomain(data), "berhasil mendapatkan data product class")
+	return baseResponse.SuccessResponse(c, FromListDomain(data), "berhasil mendapatkan data product category")
 }
 
 func (h *Http) GetById(c echo.Context) error {
@@ -44,6 +45,7 @@ func (h *Http) GetById(c echo.Context) error {
 func (h *Http) Create(c echo.Context) error {
 	req := new(Request)
 	if err := c.Bind(req); err != nil {
+		fmt.Println(req)
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	file, err := c.FormFile("image")

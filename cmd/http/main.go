@@ -31,6 +31,13 @@ func InitHttp() {
 	v1.GET("/class/:id", f.Class.GetById)
 	v1.DELETE("/class/:id", f.Class.Delete)
 	v1.PUT("/class/:id", f.Class.Update)
+
+	//PRODUCT CLASS ENDPOINT
+	v1.GET("/categories", f.Categories.GetAll)
+	v1.POST("/categories", f.Categories.Create)
+	v1.GET("/categories/:id", f.Categories.GetById)
+	v1.DELETE("/categories/:id", f.Categories.Delete)
+	v1.PUT("/categories/:id", f.Categories.Update)
 	err := e.Start(":1111")
 	if err != nil {
 		return

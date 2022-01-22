@@ -51,6 +51,13 @@ func (uc Usecase) Create(d class.Domain) (class.Domain, error) {
 }
 
 func (uc Usecase) Update(d class.Domain) (class.Domain, error) {
+	_, err := uc.data.GetById(d.ID)
+	if err != nil {
+		if err == baseErrors.ErrRecordNotFound {
+			return class.Domain{}, baseErrors.ErrRecordNotFound
+		}
+		return class.Domain{}, err
+	}
 	if d.ImageHeader != nil {
 		img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
 		d.ImageUrl = img.Location
@@ -58,12 +65,14 @@ func (uc Usecase) Update(d class.Domain) (class.Domain, error) {
 		if err != nil {
 			return class.Domain{}, err
 		}
+		data.ID = d.ID
 		return data, nil
 	} else {
 		data, err := uc.data.UpdateWithoutImage(d)
 		if err != nil {
 			return class.Domain{}, err
 		}
+		data.ID = d.ID
 		return data, nil
 	}
 }
