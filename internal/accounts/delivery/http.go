@@ -1,9 +1,7 @@
 package delivery
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
-	"log"
 	"net/http"
 	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/utils/baseErrors"
@@ -79,10 +77,6 @@ func (h *Http) Update(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	fmt.Println("ZZZZZZZZZ")
-	log.Println("ZZZZZZZZZ")
-	fmt.Println(res)
-	log.Println(res)
 	return baseResponse.SuccessResponse(c, FromDomain(res), "update data berhasil!")
 }
 
