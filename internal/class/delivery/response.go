@@ -15,7 +15,7 @@ func FromDomain(d class.Domain) Response {
 		ID:      d.ID,
 		Name:    d.Name,
 		IsPasca: d.IsPasca,
-		Image:   d.Image,
+		Image:   d.ImageUrl,
 		Slug:    d.Slug,
 	}
 }

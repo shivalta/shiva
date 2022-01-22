@@ -39,7 +39,20 @@ func (p *pgClassRepo) Update(d class.Domain) (class.Domain, error) {
 	e := p.Psql.Model(&model).Where("id = ?", d.ID).Updates(ProductClass{
 		Name:    d.Name,
 		IsPasca: d.IsPasca,
-		Image:   d.Image,
+		Image:   d.ImageUrl,
+	})
+	if e.Error != nil {
+		return class.Domain{}, e.Error
+	}
+	return model.ToDomain(), nil
+}
+
+func (p *pgClassRepo) UpdateWithoutImage(d class.Domain) (class.Domain, error) {
+	model := ProductClass{}
+	e := p.Psql.Model(&model).Where("id = ?", d.ID).Updates(ProductClass{
+		Name:    d.Name,
+		IsPasca: d.IsPasca,
+		Image:   d.ImageUrl,
 	})
 	if e.Error != nil {
 		return class.Domain{}, e.Error

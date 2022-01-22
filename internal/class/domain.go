@@ -1,11 +1,14 @@
 package class
 
+import "mime/multipart"
+
 type Domain struct {
-	ID      uint
-	Name    string
-	IsPasca bool
-	Image   string
-	Slug    string
+	ID          uint
+	Name        string
+	IsPasca     bool
+	ImageUrl    string
+	ImageHeader *multipart.FileHeader
+	Slug        string
 }
 
 type Usecase interface {
@@ -21,5 +24,6 @@ type Repository interface {
 	GetById(id uint) (Domain, error)
 	Create(class Domain) (Domain, error)
 	Update(class Domain) (Domain, error)
+	UpdateWithoutImage(class Domain) (Domain, error)
 	Delete(id uint) error
 }

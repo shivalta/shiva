@@ -42,12 +42,15 @@ func (h *Http) GetById(c echo.Context) error {
 }
 
 func (h *Http) Create(c echo.Context) error {
-	req := Request{}
-	err := c.Bind(&req)
-	if err != nil {
-		return err
+	req := new(Request)
+	if err := c.Bind(req); err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	res, err := h.usecase.Create(req.ToDomain())
+	file, err := c.FormFile("image")
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	res, err := h.usecase.Create(req.ToDomain(file))
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
@@ -65,7 +68,22 @@ func (h *Http) Update(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	req := tempReq.ToDomain()
+	file, err := c.FormFile("image")
+	switch err {
+	case http.ErrMissingFile:
+		req := tempReq.ToDomainWithoutImage()
+		req.ID = convId
+		res, err := h.usecase.Update(req)
+		if err != nil {
+			return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
+		}
+		return baseResponse.SuccessResponse(c, FromDomain(res), "data berhasil diupdate!")
+	default:
+		if err != nil {
+			return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		}
+	}
+	req := tempReq.ToDomain(file)
 	req.ID = convId
 	res, err := h.usecase.Update(req)
 	if err != nil {

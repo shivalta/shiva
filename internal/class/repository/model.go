@@ -20,17 +20,17 @@ func FromDomain(u class.Domain) ProductClass {
 	return ProductClass{
 		Name:    u.Name,
 		IsPasca: u.IsPasca,
-		Image:   u.Image,
+		Image:   u.ImageUrl,
 	}
 }
 
 func (u *ProductClass) ToDomain() class.Domain {
 	return class.Domain{
-		ID:      u.ID,
-		Name:    u.Name,
-		IsPasca: u.IsPasca,
-		Image:   u.Image,
-		Slug:    strings.ToLower(strings.ReplaceAll(u.Name, " ", "")),
+		ID:       u.ID,
+		Name:     u.Name,
+		IsPasca:  u.IsPasca,
+		ImageUrl: u.Image,
+		Slug:     strings.ToLower(strings.ReplaceAll(u.Name, " ", "")),
 	}
 }
 

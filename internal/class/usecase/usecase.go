@@ -1,8 +1,10 @@
 package usecase
 
 import (
+	"fmt"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/go-playground/validator/v10"
+	"shiva/shiva-auth/helpers/s3"
 	"shiva/shiva-auth/internal/class"
 	"shiva/shiva-auth/utils/baseErrors"
 )
@@ -40,6 +42,8 @@ func (uc Usecase) GetById(id uint) (class.Domain, error) {
 }
 
 func (uc Usecase) Create(d class.Domain) (class.Domain, error) {
+	img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
+	d.ImageUrl = img.Location
 	cls, err := uc.data.Create(d)
 	if err != nil {
 		return class.Domain{}, err
@@ -48,11 +52,23 @@ func (uc Usecase) Create(d class.Domain) (class.Domain, error) {
 }
 
 func (uc Usecase) Update(d class.Domain) (class.Domain, error) {
-	data, err := uc.data.Update(d)
-	if err != nil {
-		return class.Domain{}, err
+	fmt.Println("=========")
+	fmt.Println(d)
+	if d.ImageHeader != nil {
+		img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
+		d.ImageUrl = img.Location
+		data, err := uc.data.Update(d)
+		if err != nil {
+			return class.Domain{}, err
+		}
+		return data, nil
+	} else {
+		data, err := uc.data.UpdateWithoutImage(d)
+		if err != nil {
+			return class.Domain{}, err
+		}
+		return data, nil
 	}
-	return data, nil
 }
 
 func (uc Usecase) Delete(id uint) error {
