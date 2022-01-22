@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/helpers/s3"
@@ -52,8 +51,6 @@ func (uc Usecase) Create(d class.Domain) (class.Domain, error) {
 }
 
 func (uc Usecase) Update(d class.Domain) (class.Domain, error) {
-	fmt.Println("=========")
-	fmt.Println(d)
 	if d.ImageHeader != nil {
 		img, err := s3.ImageUpload(uc.uploader, d.ImageHeader)
 		d.ImageUrl = img.Location
