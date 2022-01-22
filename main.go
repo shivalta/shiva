@@ -14,6 +14,7 @@ func init() {
 		panic(err)
 	}
 	driver.SetupDatabasePostgres()
+	driver.ConnectS3Bucket()
 	migrations.AutoMigrate()
 }
 

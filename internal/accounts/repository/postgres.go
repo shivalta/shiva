@@ -59,9 +59,26 @@ func (p *pgAccountRepository) Update(user accounts.Domain) (accounts.Domain, err
 	model := Users{}
 	e := p.Psql.Model(&model).Where("id = ?", user.ID).Updates(Users{
 		Name:      user.Name,
+		Email:     user.Email,
 		Handphone: user.Handphone,
 		Address:   user.Address,
 	})
+
+	if e.Error != nil {
+		return accounts.Domain{}, e.Error
+	}
+	return model.UserToDomain(), nil
+}
+
+func (p *pgAccountRepository) UpdateWithPassword(user accounts.Domain) (accounts.Domain, error) {
+	model := Users{}
+	e := p.Psql.Model(&model).Where("id = ?", user.ID).Updates(Users{
+		Name:      user.Name,
+		Email:     user.Email,
+		Handphone: user.Handphone,
+		Address:   user.Address,
+	})
+
 	if e.Error != nil {
 		return accounts.Domain{}, e.Error
 	}

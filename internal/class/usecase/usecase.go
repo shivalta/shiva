@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/internal/class"
 	"shiva/shiva-auth/utils/baseErrors"
@@ -9,12 +10,14 @@ import (
 type Usecase struct {
 	data     class.Repository
 	validate *validator.Validate
+	uploader *s3manager.Uploader
 }
 
-func NewClassUsecase(r class.Repository) class.Usecase {
+func NewClassUsecase(r class.Repository, uploader *s3manager.Uploader) class.Usecase {
 	return &Usecase{
 		data:     r,
 		validate: validator.New(),
+		uploader: uploader,
 	}
 }
 
