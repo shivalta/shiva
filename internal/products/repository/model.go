@@ -11,9 +11,9 @@ import (
 type Products struct {
 	gorm.Model
 	ProductClassId    uint
-	ProductClass      rclass.ProductClass `gorm:"foreignKey:ProductClassId"`
+	ProductClass      rclass.ProductClass `gorm:"foreignKey:product_class_id"`
 	ProductCategoryId uint
-	ProductCategory   rcat.ProductCategories `gorm:"foreignKey:ProductCategoryId"`
+	ProductCategory   rcat.ProductCategories `gorm:"foreignKey:product_category_id"`
 	Sku               string
 	Name              string
 	AdminFee          int
@@ -38,7 +38,20 @@ func FromDomain(u products.Domain) Products {
 
 func (u *Products) ToDomain() products.Domain {
 	return products.Domain{
-		ID:                u.ID,
+		ID: u.ID,
+		ProductClass: products.Class{
+			ID:       u.ProductClass.ID,
+			Name:     u.ProductClass.Name,
+			IsPasca:  u.ProductClass.IsPasca,
+			ImageUrl: u.ProductClass.Image,
+		},
+		ProductCategory: products.Categories{
+			ID:             u.ProductCategory.ID,
+			ProductClassId: u.ProductCategory.ProductClassId,
+			Name:           u.ProductCategory.Name,
+			ImageUrl:       u.ProductCategory.Image,
+			Tax:            u.ProductCategory.Tax,
+		},
 		ProductClassId:    u.ProductClassId,
 		ProductCategoryId: u.ProductCategoryId,
 		Sku:               u.Sku,

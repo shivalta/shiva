@@ -47,7 +47,7 @@ func InitFactoryHTTP() PresenterHTTP {
 	categoriesDelivery := d_categories.NewCategoriesHandler(categoriesUsecase)
 
 	productsRepo := r_products.NewProductsRepo(driver.Psql)
-	productsUsecase := u_products.NewProductsUsecase(productsRepo)
+	productsUsecase := u_products.NewProductsUsecase(productsRepo, classUsecase, categoriesUsecase)
 	productsDelivery := d_products.NewProductsHandler(productsUsecase)
 
 	return PresenterHTTP{

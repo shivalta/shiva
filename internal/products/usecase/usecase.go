@@ -2,19 +2,25 @@ package Usecase
 
 import (
 	"github.com/go-playground/validator/v10"
+	"shiva/shiva-auth/internal/categories"
+	"shiva/shiva-auth/internal/class"
 	"shiva/shiva-auth/internal/products"
 	"shiva/shiva-auth/utils/baseErrors"
 )
 
 type Usecase struct {
-	data     products.Repository
-	validate *validator.Validate
+	data            products.Repository
+	validate        *validator.Validate
+	classUsecase    class.Usecase
+	categoryUsecase categories.Usecase
 }
 
-func NewProductsUsecase(r products.Repository) products.Usecase {
+func NewProductsUsecase(r products.Repository, classUsecase class.Usecase, categoryUsecase categories.Usecase) products.Usecase {
 	return &Usecase{
-		data:     r,
-		validate: validator.New(),
+		data:            r,
+		validate:        validator.New(),
+		classUsecase:    classUsecase,
+		categoryUsecase: categoryUsecase,
 	}
 }
 
@@ -37,11 +43,34 @@ func (uc Usecase) GetById(id uint) (products.Domain, error) {
 }
 
 func (uc Usecase) Create(d products.Domain) (products.Domain, error) {
-	cls, err := uc.data.Create(d)
+	cls, err := uc.classUsecase.GetById(d.ProductClassId)
 	if err != nil {
 		return products.Domain{}, err
 	}
-	return cls, nil
+	category, err := uc.categoryUsecase.GetById(d.ProductCategoryId)
+	if err != nil {
+		return products.Domain{}, err
+	}
+	p, err := uc.data.Create(d)
+	if err != nil {
+		return products.Domain{}, err
+	}
+	p.ProductClass = products.Class{
+		ID:       cls.ID,
+		Name:     cls.Name,
+		IsPasca:  cls.IsPasca,
+		ImageUrl: cls.ImageUrl,
+		Slug:     cls.Slug,
+	}
+	p.ProductCategory = products.Categories{
+		ID:             category.ID,
+		ProductClassId: category.ProductClassId,
+		Name:           category.Name,
+		ImageUrl:       category.ImageUrl,
+		Slug:           category.Slug,
+		Tax:            category.Tax,
+	}
+	return p, nil
 }
 
 func (uc Usecase) Update(d products.Domain) (products.Domain, error) {

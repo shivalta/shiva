@@ -6,8 +6,8 @@ import (
 
 type Response struct {
 	ID                uint               `json:"id"`
-	ProductClass      ResponseClass      `json:"product_class"`
-	ProductCategories ResponseCategories `json:"product_categories"`
+	ProductClass      ResponseClass      `json:"product_class,omitempty"`
+	ProductCategories ResponseCategories `json:"product_categories,omitempty"`
 	Sku               string             `json:"sku"`
 	Name              string             `json:"name"`
 	AdminFee          int                `json:"admin_fee"`
@@ -21,7 +21,7 @@ type ResponseClass struct {
 	Name    string `json:"name"`
 	IsPasca bool   `json:"is_pasca"`
 	Image   string `json:"image"`
-	Slug    string `json:"slug"`
+	Slug    string `json:"slug,omitempty"`
 }
 
 type ResponseCategories struct {
@@ -29,7 +29,7 @@ type ResponseCategories struct {
 	Name  string  `json:"name"`
 	Image string  `json:"image,omitempty"`
 	Tax   float32 `json:"tax"`
-	Slug  string  `json:"slug"`
+	Slug  string  `json:"slug,omitempty"`
 }
 
 func FromDomain(d products.Domain) Response {
