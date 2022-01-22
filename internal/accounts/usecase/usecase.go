@@ -91,6 +91,18 @@ func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
 	} else if user.Handphone == "" {
 		return accounts.Domain{}, baseErrors.ErrUsersHandphoneRequired
 	}
+	if user.Password != "" {
+		if user.Repassword == user.Password {
+			data, err := uc.data.UpdateWithPassword(user)
+			if err != nil {
+				return accounts.Domain{}, err
+			}
+			return data, nil
+		} else {
+			return accounts.Domain{}, baseErrors.ErrInvalidPassword
+		}
+	}
+
 	data, err := uc.data.Update(user)
 	if err != nil {
 		return accounts.Domain{}, err

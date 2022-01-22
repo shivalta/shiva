@@ -30,5 +30,6 @@ type Repository interface {
 	GetByEmail(email string) (Domain, error)
 	GetAll(search string) ([]Domain, error)
 	GetById(id uint) (Domain, error)
+	UpdateWithPassword(user Domain) (Domain, error)
 	ChangePassword(id uint, password string) (Domain, error)
 }
