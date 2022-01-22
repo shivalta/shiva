@@ -8,6 +8,7 @@ var (
 	ErrInvalidAuth       = errors.New("autentikasi tidak valid")
 	ErrUserEmailNotFound = errors.New("email tidak ditemukan")
 	ErrUserNotActive     = errors.New("akun belum terverifikasi")
+	ErrRecordNotFound    = errors.New("record not found")
 
 	//USERS MODEL
 	ErrUserEmailRequired      = errors.New("email wajib diisi!")
@@ -21,4 +22,7 @@ var (
 	ErrUsersEmailRequired     = errors.New("email wajib diisi!")
 	ErrInvalidTokenCredential = errors.New("token tidak ditemukan atau sudah kadaluarsa")
 	ErrEmailSmtp              = errors.New("email tidak terkirim :(")
+
+	//CATEGORIES MODEL
+	ErrCategoriesIdNotFound = errors.New("product categories id not found!")
 )

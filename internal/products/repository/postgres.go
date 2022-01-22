@@ -16,19 +16,13 @@ func NewClassRepo(psql *gorm.DB) class.Repository {
 }
 
 func (p *pgClassRepo) GetAll(search string, key string) ([]class.Domain, error) {
-	var model []ProductClass
-	if key == "" {
-		err := p.Psql.Find(&model)
-		if err.Error != nil {
-			return []class.Domain{}, err.Error
-		}
-		return ToDomainList(model), nil
-	}
-	err := p.Psql.Find(&model, key+` = ?`, search)
+	var user []ProductClass
+	err := p.Psql.Find(&user)
+
 	if err.Error != nil {
 		return []class.Domain{}, err.Error
 	}
-	return ToDomainList(model), nil
+	return ToDomainList(user), nil
 }
 
 func (p *pgClassRepo) GetById(id uint) (class.Domain, error) {
