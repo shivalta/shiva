@@ -30,7 +30,7 @@ func (u *ProductClass) ToDomain() class.Domain {
 		Name:     u.Name,
 		IsPasca:  u.IsPasca,
 		ImageUrl: u.Image,
-		Slug:     strings.ToLower(strings.ReplaceAll(u.Name, " ", "")),
+		Slug:     strings.ToLower(strings.ReplaceAll(u.Name, " ", "-")),
 	}
 }
 
