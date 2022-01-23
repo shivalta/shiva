@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"gorm.io/gorm"
 	"shiva/shiva-auth/internal/products"
 )
@@ -19,9 +18,7 @@ func NewProductsRepo(psql *gorm.DB) products.Repository {
 func (p *pgProductsRepo) GetAll(search string, key string) ([]products.Domain, error) {
 	var model []Products
 	if key == "" {
-		err := p.Psql.Preload("ProductClass").Find(&model)
-		fmt.Println("model")
-		fmt.Println(model)
+		err := p.Psql.Preload("ProductClass").Preload("ProductCategory").Find(&model)
 		if err.Error != nil {
 			return []products.Domain{}, err.Error
 		}

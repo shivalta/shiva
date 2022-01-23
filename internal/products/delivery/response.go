@@ -16,6 +16,18 @@ type Response struct {
 	IsActive          bool               `json:"is_active"`
 }
 
+type ResponseWithoutForeign struct {
+	ID                uint   `json:"id"`
+	ProductClassId    uint   `json:"product_class_id"`
+	ProductCategoryId uint   `json:"product_category_id"`
+	Sku               string `json:"sku"`
+	Name              string `json:"name"`
+	AdminFee          int    `json:"admin_fee"`
+	Stock             int    `json:"stock"`
+	Price             int    `json:"price"`
+	IsActive          bool   `json:"is_active"`
+}
+
 type ResponseClass struct {
 	ID      uint   `json:"id"`
 	Name    string `json:"name"`
@@ -55,6 +67,20 @@ func FromDomain(d products.Domain) Response {
 		Stock:    d.Stock,
 		Price:    d.Price,
 		IsActive: d.IsActive,
+	}
+}
+
+func FromDomainWithoutForeign(d products.Domain) ResponseWithoutForeign {
+	return ResponseWithoutForeign{
+		ID:                d.ID,
+		ProductClassId:    d.ProductClassId,
+		ProductCategoryId: d.ProductCategoryId,
+		Sku:               d.Sku,
+		Name:              d.Name,
+		AdminFee:          d.AdminFee,
+		Stock:             d.Stock,
+		Price:             d.Price,
+		IsActive:          d.IsActive,
 	}
 }
 

@@ -5,6 +5,7 @@ import (
 	rcat "shiva/shiva-auth/internal/categories/repository"
 	rclass "shiva/shiva-auth/internal/class/repository"
 	"shiva/shiva-auth/internal/products"
+	"strings"
 	"time"
 )
 
@@ -28,6 +29,7 @@ func FromDomain(u products.Domain) Products {
 	return Products{
 		ProductClassId:    u.ProductClassId,
 		ProductCategoryId: u.ProductCategoryId,
+		Sku:               u.Sku,
 		Name:              u.Name,
 		AdminFee:          u.AdminFee,
 		Stock:             u.Stock,
@@ -44,6 +46,7 @@ func (u *Products) ToDomain() products.Domain {
 			Name:     u.ProductClass.Name,
 			IsPasca:  u.ProductClass.IsPasca,
 			ImageUrl: u.ProductClass.Image,
+			Slug:     strings.ToLower(strings.ReplaceAll(u.ProductClass.Name, " ", "-")),
 		},
 		ProductCategory: products.Categories{
 			ID:             u.ProductCategory.ID,
@@ -51,6 +54,7 @@ func (u *Products) ToDomain() products.Domain {
 			Name:           u.ProductCategory.Name,
 			ImageUrl:       u.ProductCategory.Image,
 			Tax:            u.ProductCategory.Tax,
+			Slug:           strings.ToLower(strings.ReplaceAll(u.ProductCategory.Name, " ", "-")),
 		},
 		ProductClassId:    u.ProductClassId,
 		ProductCategoryId: u.ProductCategoryId,

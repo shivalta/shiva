@@ -50,7 +50,7 @@ func (h *Http) Create(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "data berhasil ditambah!")
+	return baseResponse.SuccessResponse(c, FromDomainWithoutForeign(res), "data berhasil ditambah!")
 }
 
 func (h *Http) Update(c echo.Context) error {
@@ -70,7 +70,7 @@ func (h *Http) Update(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusBadRequest, err)
 	}
-	return baseResponse.SuccessResponse(c, FromDomain(res), "data berhasil diupdate!")
+	return baseResponse.SuccessResponse(c, FromDomainWithoutForeign(res), "data berhasil diupdate!")
 }
 
 func (h *Http) Delete(c echo.Context) error {
