@@ -53,5 +53,5 @@ type Repository interface {
 
 type XenditRepository interface {
 	PaymentChannel() (Domain, error)
-	CreateVA(id uint, bankname string, bankCode string) (Domain, error)
+	CreateVA(id string, bankName string, bankCode string) (Domain, error)
 }

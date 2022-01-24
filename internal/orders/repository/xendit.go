@@ -1,6 +1,9 @@
 package repository
 
-import "net/http"
+import (
+	"net/http"
+	"shiva/shiva-auth/internal/orders"
+)
 
 type XenditAPI struct {
 	Client  http.Client
@@ -8,14 +11,18 @@ type XenditAPI struct {
 	ApiKey  string
 }
 
-func NewXenditAPI(api XenditAPI) *XenditAPI {
+func NewXenditAPI(client string, baseUrl string, apiKey string) orders.XenditRepository {
 	return &XenditAPI{
 		Client:  http.Client{},
-		BaseUrl: api.BaseUrl,
-		ApiKey:  api.ApiKey,
+		BaseUrl: baseUrl,
+		ApiKey:  apiKey,
 	}
 }
 
-//func (api *XenditAPI) CreateVA(bankCode string, name string) error {
-//
-//}
+func (api *XenditAPI) PaymentChannel() (orders.Domain, error) {
+	panic("implement me")
+}
+
+func (api *XenditAPI) CreateVA(id string, bankName string, bankCode string) (orders.Domain, error) {
+	panic("implement me")
+}
