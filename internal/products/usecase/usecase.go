@@ -47,6 +47,9 @@ func (uc Usecase) Create(d products.Domain) (products.Domain, error) {
 	if err != nil {
 		return products.Domain{}, err
 	}
+	if cls.IsPasca {
+		d.Price = nil
+	}
 	category, err := uc.categoryUsecase.GetById(d.ProductCategoryId)
 	if err != nil {
 		return products.Domain{}, err

@@ -14,7 +14,7 @@ type XenditAPI struct {
 type PaymentChannels struct {
 }
 
-func NewXenditAPI(client string, baseUrl string, apiKey string) orders.XenditRepository {
+func NewXenditAPI(baseUrl string, apiKey string) orders.XenditRepository {
 	return &XenditAPI{
 		Client:  http.Client{},
 		BaseUrl: baseUrl,

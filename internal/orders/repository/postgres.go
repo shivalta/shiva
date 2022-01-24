@@ -15,15 +15,15 @@ func NewOrdersRepo(psql *gorm.DB) orders.Repository {
 	}
 }
 
-func (p pgOrdersRepo) CheckoutPulsa(userId uint, productId uint) ([]orders.Domain, error) {
+func (p pgOrdersRepo) CheckoutPulsa(userId uint, productId uint) (orders.Domain, error) {
 	panic("implement me")
 }
 
-func (p pgOrdersRepo) CheckoutPDAM(userId uint, productId uint) ([]orders.Domain, error) {
+func (p pgOrdersRepo) CheckoutPDAM(userId uint, productId uint) (orders.Domain, error) {
 	panic("implement me")
 }
 
-func (p pgOrdersRepo) CheckoutListrik(userId uint, productId uint) ([]orders.Domain, error) {
+func (p pgOrdersRepo) CheckoutListrik(userId uint, productId uint) (orders.Domain, error) {
 	panic("implement me")
 }
 

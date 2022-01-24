@@ -12,7 +12,7 @@ type Domain struct {
 	Name              string
 	AdminFee          int
 	Stock             int
-	Price             int
+	Price             *int
 	IsActive          bool
 }
 

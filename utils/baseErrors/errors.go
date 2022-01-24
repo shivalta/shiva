@@ -10,7 +10,7 @@ var (
 	ErrUserNotActive     = errors.New("akun belum terverifikasi")
 	ErrRecordNotFound    = errors.New("record not found")
 
-	//USERS MODEL
+	//USERS
 	ErrUserEmailRequired      = errors.New("email wajib diisi!")
 	ErrUserEmailUsed          = errors.New("email is has been used")
 	ErrUsersNameRequired      = errors.New("name wajib diisi!")
@@ -23,6 +23,11 @@ var (
 	ErrInvalidTokenCredential = errors.New("token tidak ditemukan atau sudah kadaluarsa")
 	ErrEmailSmtp              = errors.New("email tidak terkirim :(")
 
-	//CATEGORIES MODEL
+	//CATEGORIES
 	ErrCategoriesIdNotFound = errors.New("product categories id not found!")
+
+	//ORDERS
+	ErrNoHpRequired      = errors.New("nomor hp harus diisi!")
+	ErrNoPdamRequired    = errors.New("nomor pdam harus diisi!")
+	ErrNoListrikRequired = errors.New("nomor listrik harus diisi!")
 )
