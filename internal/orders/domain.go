@@ -46,8 +46,12 @@ type Repository interface {
 	CheckoutPulsa(userId uint, productId uint) ([]Domain, error)
 	CheckoutPDAM(userId uint, productId uint) ([]Domain, error)
 	CheckoutListrik(userId uint, productId uint) ([]Domain, error)
-	PaymentChannel() (Domain, error)
-	CreateVA(productId uint, userId uint, bankCode string) (Domain, error)
+	CreateTransaction(productId uint, userId uint, bankCode string) (Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
+}
+
+type XenditRepository interface {
+	PaymentChannel() (Domain, error)
+	CreateVA(id uint, bankname string, bankCode string) (Domain, error)
 }
