@@ -26,6 +26,9 @@ var (
 	//CATEGORIES
 	ErrCategoriesIdNotFound = errors.New("product categories id not found!")
 
+	//PRODUCTS
+	ErrProductClassIdNotSync = errors.New("product_class_id tidak diterima, karena tidak sama dengan product_class_id pada product_category")
+
 	//ORDERS
 	ErrNoHpRequired      = errors.New("nomor hp harus diisi!")
 	ErrNoPdamRequired    = errors.New("nomor pdam harus diisi!")

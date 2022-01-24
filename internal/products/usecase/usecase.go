@@ -43,16 +43,19 @@ func (uc Usecase) GetById(id uint) (products.Domain, error) {
 }
 
 func (uc Usecase) Create(d products.Domain) (products.Domain, error) {
+	category, err := uc.categoryUsecase.GetById(d.ProductCategoryId)
+	if err != nil {
+		return products.Domain{}, err
+	}
+	if category.ProductClassId != d.ProductClassId {
+		return products.Domain{}, baseErrors.ErrProductClassIdNotSync
+	}
 	cls, err := uc.classUsecase.GetById(d.ProductClassId)
 	if err != nil {
 		return products.Domain{}, err
 	}
 	if cls.IsPasca {
 		d.Price = nil
-	}
-	category, err := uc.categoryUsecase.GetById(d.ProductCategoryId)
-	if err != nil {
-		return products.Domain{}, err
 	}
 	p, err := uc.data.Create(d)
 	if err != nil {

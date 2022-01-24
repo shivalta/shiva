@@ -8,14 +8,12 @@ import (
 type MockupApi struct {
 	Client  http.Client
 	BaseUrl string
-	ApiKey  string
 }
 
-func NewMockupApi(baseUrl string, apiKey string) orders.MockupIoRepository {
+func NewMockupApi(baseUrl string) orders.MockupIoRepository {
 	return &MockupApi{
 		Client:  http.Client{},
 		BaseUrl: baseUrl,
-		ApiKey:  apiKey,
 	}
 }
 

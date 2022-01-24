@@ -34,7 +34,7 @@ func (h *Http) CheckoutListrik(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	res, err := h.usecase.CheckoutPulsa(req.UserValue, req.ProductId)
+	res, err := h.usecase.CheckoutListrik(req.UserValue, req.ProductId)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
@@ -46,7 +46,7 @@ func (h *Http) CheckoutPDAM(c echo.Context) error {
 	if err := c.Bind(req); err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
-	res, err := h.usecase.CheckoutPulsa(req.UserValue, req.ProductId)
+	res, err := h.usecase.CheckoutPDAM(req.UserValue, req.ProductId)
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}

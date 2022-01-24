@@ -19,6 +19,10 @@ import (
 	d_products "shiva/shiva-auth/internal/products/delivery"
 	r_products "shiva/shiva-auth/internal/products/repository"
 	u_products "shiva/shiva-auth/internal/products/usecase"
+
+	d_orders "shiva/shiva-auth/internal/orders/delivery"
+	r_orders "shiva/shiva-auth/internal/orders/repository"
+	u_orders "shiva/shiva-auth/internal/orders/usecase"
 )
 
 type PresenterHTTP struct {
@@ -26,6 +30,7 @@ type PresenterHTTP struct {
 	Categories *d_categories.Http
 	Class      *d_class.Http
 	Products   *d_products.Http
+	Orders     *d_orders.Http
 }
 
 func InitFactoryHTTP() PresenterHTTP {
@@ -50,10 +55,17 @@ func InitFactoryHTTP() PresenterHTTP {
 	productsUsecase := u_products.NewProductsUsecase(productsRepo, classUsecase, categoriesUsecase)
 	productsDelivery := d_products.NewProductsHandler(productsUsecase)
 
+	ordersMockapi := r_orders.NewMockupApi(viper.GetString(`mockapi.base_url`))
+	ordersXendit := r_orders.NewXenditAPI(viper.GetString(`xendit.base_url`), viper.GetString(`xendit.api_key`))
+	ordersRepo := r_orders.NewOrdersRepo(driver.Psql)
+	ordersUsecase := u_orders.NewOrdersUsecase(ordersRepo, ordersXendit, ordersMockapi, productsUsecase)
+	ordersDelivery := d_orders.NewOrdersHandler(ordersUsecase)
+
 	return PresenterHTTP{
 		Accounts:   accountsDelivery,
 		Class:      classDelivery,
 		Categories: categoriesDelivery,
 		Products:   productsDelivery,
+		Orders:     ordersDelivery,
 	}
 }

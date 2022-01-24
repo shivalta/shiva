@@ -45,6 +45,12 @@ func InitHttp() {
 	v1.GET("/products/:id", f.Products.GetById)
 	v1.DELETE("/products/:id", f.Products.Delete)
 	v1.PUT("/products/:id", f.Products.Update)
+
+	//CHECKOUT ENDPOINT
+	v1.GET("/order/pulsa", f.Orders.CheckoutPulsa)
+	v1.GET("/order/listrik", f.Orders.CheckoutListrik)
+	v1.GET("/order/pdam", f.Orders.CheckoutPDAM)
+
 	err := e.Start(":1111")
 	if err != nil {
 		return

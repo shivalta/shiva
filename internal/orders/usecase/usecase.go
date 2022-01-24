@@ -15,7 +15,7 @@ type Usecase struct {
 	validate *validator.Validate
 }
 
-func NewOrderUsecase(data orders.Repository, xendit orders.XenditRepository, mockapi orders.MockupIoRepository, product products.Usecase) orders.Usecase {
+func NewOrdersUsecase(data orders.Repository, xendit orders.XenditRepository, mockapi orders.MockupIoRepository, product products.Usecase) orders.Usecase {
 	return &Usecase{
 		data:     data,
 		xendit:   xendit,
@@ -33,7 +33,7 @@ func (u Usecase) CheckoutPulsa(userValue string, productId uint) (orders.Domain,
 	if err != nil {
 		return orders.Domain{}, err
 	}
-	totalPrice := (prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
+	totalPrice := (*prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
 	order := orders.Domain{}
 	order.TotalPrice = totalPrice
 	order.Products = orders.Products{
@@ -55,7 +55,7 @@ func (u Usecase) CheckoutPulsa(userValue string, productId uint) (orders.Domain,
 		Name:     prod.Name,
 		AdminFee: prod.AdminFee,
 		Stock:    prod.Stock,
-		Price:    prod.Price,
+		Price:    *prod.Price,
 		IsActive: prod.IsActive,
 	}
 	order.UserValue = userValue
@@ -70,7 +70,7 @@ func (u Usecase) CheckoutListrik(userValue string, productId uint) (orders.Domai
 	if err != nil {
 		return orders.Domain{}, err
 	}
-	totalPrice := (prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
+	totalPrice := (*prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
 	order := orders.Domain{}
 	order.TotalPrice = totalPrice
 	order.Products = orders.Products{
@@ -92,7 +92,7 @@ func (u Usecase) CheckoutListrik(userValue string, productId uint) (orders.Domai
 		Name:     prod.Name,
 		AdminFee: prod.AdminFee,
 		Stock:    prod.Stock,
-		Price:    prod.Price,
+		Price:    *prod.Price,
 		IsActive: prod.IsActive,
 	}
 	order.UserValue = userValue
@@ -107,7 +107,7 @@ func (u Usecase) CheckoutPDAM(userValue string, productId uint) (orders.Domain, 
 	if err != nil {
 		return orders.Domain{}, err
 	}
-	totalPrice := (prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
+	totalPrice := (*prod.Price + prod.AdminFee) * int(prod.ProductCategory.Tax/float32(100))
 	order := orders.Domain{}
 	order.TotalPrice = totalPrice
 	order.Products = orders.Products{
@@ -129,7 +129,7 @@ func (u Usecase) CheckoutPDAM(userValue string, productId uint) (orders.Domain, 
 		Name:     prod.Name,
 		AdminFee: prod.AdminFee,
 		Stock:    prod.Stock,
-		Price:    prod.Price,
+		Price:    *prod.Price,
 		IsActive: prod.IsActive,
 	}
 	pdam, err := u.mockapi.GetName(userValue)
