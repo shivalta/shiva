@@ -5,24 +5,31 @@ jwt:
 encrypt:
   keystring:
   additional:
-debug: true
+debug:
 databases:
   postgres:
     host:
     user:
     password:
     dbname:
-    port: '5432'
-    sslmode: disable
-    timezone: Asia/Jakarta
+    port:
+    sslmode:
+    timezone:
 server:
   address:
     host:
     frontend:
-    port: '1111'
+    port:
 smtp:
-  host: smtp.gmail.com
-  port: 587
-  sender_name: Shiva by Alterra Academy <shivalterra27@gmail.com>
+  host:
+  port:
+  sender_name:
   email:
   password:
+aws_s3:
+  bucket_name:
+  region:
+  access_key_id:
+  secret_access_key:
+xendit:
+  api_key:

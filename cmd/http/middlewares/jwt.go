@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"shiva/shiva-auth/utils/baseErrors"
 	"shiva/shiva-auth/utils/baseResponse"
-	"shiva/shiva-auth/utils/converter"
 	"time"
 )
 
@@ -15,6 +14,16 @@ type JWTCustomClaims struct {
 	ID      uint `json:"id"`
 	IsAdmin bool `json:"is_admin"`
 	jwt.StandardClaims
+}
+
+type CustomContext struct {
+	echo.Context
+}
+
+func (c *CustomContext) GetUserId() (uint, error) {
+	user := c.Context.Get("user").(*jwt.Token)
+	claims := user.Claims.(*JWTCustomClaims)
+	return claims.ID, nil
 }
 
 type ConfigJWT struct {
@@ -61,19 +70,26 @@ func IsAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 	}
 }
 
-func IsUserId(next echo.HandlerFunc) echo.HandlerFunc {
+func GetUserId(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		user := c.Get("user").(*jwt.Token)
-		userId := c.Param("userId")
-		convUserId, err := converter.StringToUint(userId)
-		if err != nil {
-			return echo.ErrBadRequest
-		}
-		claims := user.Claims.(*JWTCustomClaims)
-		claimUserId := claims.ID
-		if claimUserId != convUserId {
-			return echo.ErrUnauthorized
-		}
-		return next(c)
+		cc := &CustomContext{c}
+		return next(cc)
 	}
 }
+
+//func IsUserId(next echo.HandlerFunc) echo.HandlerFunc {
+//	return func(c echo.Context) error {
+//		user := c.Get("user").(*jwt.Token)
+//		userId := c.Param("userId")
+//		convUserId, err := converter.StringToUint(userId)
+//		if err != nil {
+//			return echo.ErrBadRequest
+//		}
+//		claims := user.Claims.(*JWTCustomClaims)
+//		claimUserId := claims.ID
+//		if claimUserId != convUserId {
+//			return echo.ErrUnauthorized
+//		}
+//		return next(c)
+//	}
+//}

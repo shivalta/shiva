@@ -1,7 +1,6 @@
 package delivery
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"shiva/shiva-auth/internal/categories"
@@ -45,7 +44,6 @@ func (h *Http) GetById(c echo.Context) error {
 func (h *Http) Create(c echo.Context) error {
 	req := new(Request)
 	if err := c.Bind(req); err != nil {
-		fmt.Println(req)
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	file, err := c.FormFile("image")

@@ -11,7 +11,7 @@ type Request struct {
 	Name              string `json:"name"`
 	AdminFee          int    `json:"admin_fee"`
 	Stock             int    `json:"stock"`
-	Price             int    `json:"price"`
+	Price             *int   `json:"price"`
 	IsActive          bool   `json:"is_active"`
 }
 

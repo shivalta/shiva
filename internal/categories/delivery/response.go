@@ -5,20 +5,22 @@ import (
 )
 
 type Response struct {
-	ID    uint    `json:"id"`
-	Name  string  `json:"name"`
-	Image string  `json:"image,omitempty"`
-	Tax   float32 `json:"tax"`
-	Slug  string  `json:"slug"`
+	ID             uint    `json:"id"`
+	ProductClassId uint    `json:"product_class_id"`
+	Name           string  `json:"name"`
+	Image          string  `json:"image,omitempty"`
+	Tax            float32 `json:"tax"`
+	Slug           string  `json:"slug"`
 }
 
 func FromDomain(d categories.Domain) Response {
 	return Response{
-		ID:    d.ID,
-		Name:  d.Name,
-		Image: d.ImageUrl,
-		Tax:   d.Tax,
-		Slug:  d.Slug,
+		ID:             d.ID,
+		Name:           d.Name,
+		Image:          d.ImageUrl,
+		ProductClassId: d.ProductClassId,
+		Tax:            d.Tax,
+		Slug:           d.Slug,
 	}
 }
 

@@ -19,7 +19,7 @@ type Products struct {
 	Name              string
 	AdminFee          int
 	Stock             int
-	Price             int
+	Price             *int
 	IsActive          bool
 	CreatedAt         time.Time `gorm:"autoCreateTime"`
 	UpdatedAt         time.Time `gorm:"autoUpdateTime"`
