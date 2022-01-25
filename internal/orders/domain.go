@@ -13,6 +13,8 @@ type Domain struct {
 	FailDateTime      time.Time
 	ExpirationPayment time.Time
 	TotalPrice        int
+	TotalTax          float32
+	TotalAdmin        int
 	AccountNumber     string
 	UserValue         string
 	Products          Products
@@ -72,19 +74,14 @@ type Categories struct {
 }
 
 type Usecase interface {
-	CheckoutPulsa(userValue string, productId uint, isLoggedIn bool) (Domain, error)
-	CheckoutPDAM(userValue string, productId uint, isLoggedIn bool) (Domain, error)
-	CheckoutListrik(userValue string, productId uint, isLoggedIn bool) (Domain, error)
-	CreateVA(productId uint, userId uint, bankCode string) (Domain, error)
+	Checkout(userValue string, productId uint) (Domain, error)
+	CreateVA(productId uint, userId uint, bankCode string, userValue string) (Domain, error)
 	PaymentChannels() ([]Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
 }
 
 type Repository interface {
-	CheckoutPulsa(userId uint, productId uint) (Domain, error)
-	CheckoutPDAM(userId uint, productId uint) (Domain, error)
-	CheckoutListrik(userId uint, productId uint) (Domain, error)
 	CreateTransaction(productId uint, userId uint, bankCode string) (Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
@@ -96,5 +93,6 @@ type XenditRepository interface {
 }
 
 type MockupIoRepository interface {
-	GetName(id string) (Domain, error)
+	GetMockListrik(id string) (Domain, error)
+	GetMockPDAM(id string) (Domain, error)
 }

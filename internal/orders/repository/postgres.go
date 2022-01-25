@@ -15,20 +15,8 @@ func NewOrdersRepo(psql *gorm.DB) orders.Repository {
 	}
 }
 
-func (p pgOrdersRepo) CheckoutPulsa(userId uint, productId uint) (orders.Domain, error) {
-	panic("implement me")
-}
-
-func (p pgOrdersRepo) CheckoutPDAM(userId uint, productId uint) (orders.Domain, error) {
-	panic("implement me")
-}
-
-func (p pgOrdersRepo) CheckoutListrik(userId uint, productId uint) (orders.Domain, error) {
-	panic("implement me")
-}
-
 func (p pgOrdersRepo) CreateTransaction(productId uint, userId uint, bankCode string) (orders.Domain, error) {
-	panic("implement me")
+	panic("")
 }
 
 func (p pgOrdersRepo) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {

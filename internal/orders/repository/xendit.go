@@ -37,10 +37,18 @@ func (api *XenditAPI) PaymentChannels() ([]orders.Domain, error) {
 	return dto.PaymentChannelToDomainList(response), nil
 }
 
-func (api *XenditAPI) PaymentChannel() (orders.Domain, error) {
-	panic("implement me")
-}
-
 func (api *XenditAPI) CreateVA(id string, bankName string, bankCode string) (orders.Domain, error) {
-	panic("implement me")
+	uri := api.BaseUrl + "/callback_virtual_accounts"
+	req, _ := http.NewRequest("POST", uri, nil)
+	req.SetBasicAuth(api.ApiKey, "")
+	resp, err := api.Client.Do(req)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+	var response dto.CreateVAResponse
+	err = json.NewDecoder(resp.Body).Decode(&response)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+	return response.CreateVAToDomain(), nil
 }

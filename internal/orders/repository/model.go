@@ -21,6 +21,7 @@ type Transactions struct {
 	ExpirationPayment  time.Time
 	TotalPrice         int
 	AccountNumber      string
+	BankCode           string
 	CreatedAt          time.Time `gorm:"autoCreateTime"`
 	UpdatedAt          time.Time `gorm:"autoUpdateTime"`
 }
