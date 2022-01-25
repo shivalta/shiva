@@ -38,7 +38,16 @@ func (p pgOrdersRepo) CreateTransaction(domain orders.Domain) (orders.Domain, er
 }
 
 func (p pgOrdersRepo) UpdateAfterCreateVA(domain orders.Domain) (orders.Domain, error) {
-	panic("implement me")
+	t := FromDomainToTransaction(domain)
+	err := p.Psql.Create(&t)
+	if err.Error != nil {
+		return orders.Domain{}, err.Error
+	}
+	err = p.Psql.Preload("DetailTransactions").Preload("Products").Find(&t)
+	if err.Error != nil {
+		return orders.Domain{}, err.Error
+	}
+	return t.ToDomain(), nil
 }
 
 //func (p pgOrdersRepo) CreateTransaction(productId uint, userId uint, bankCode string) (orders.Domain, error) {
