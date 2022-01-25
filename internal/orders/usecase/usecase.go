@@ -139,11 +139,9 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 		return orders.Domain{}, err
 	}
 
-	fmt.Println("DORW")
-
 	xendit, err := u.xendit.CreateVA(strconv.Itoa(int(res.ID)), bankCode)
-	fmt.Println("DORWZZZ")
 
+	fmt.Println("ACCOUNT ", xendit.AccountNumber)
 	order.AccountNumber = xendit.AccountNumber
 	order.ExpirationPayment = xendit.ExpirationPayment
 
