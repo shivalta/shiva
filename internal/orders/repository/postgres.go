@@ -16,7 +16,14 @@ func NewOrdersRepo(psql *gorm.DB) orders.Repository {
 }
 
 func (p pgOrdersRepo) CreateTransaction(productId uint, userId uint, bankCode string) (orders.Domain, error) {
+	//u := FromDomain(user)
+	//err := p.Psql.Create(&u)
+	//if err.Error != nil {
+	//	return accounts.Domain{}, err.Error
+	//}
+	//return u.UserToDomain(), nil
 	panic("")
+
 }
 
 func (p pgOrdersRepo) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {

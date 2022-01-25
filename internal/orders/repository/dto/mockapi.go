@@ -19,13 +19,13 @@ type MockapiPDAMResponse struct {
 
 func (m *MockapiListrikResponse) ToDomain() orders.Domain {
 	return orders.Domain{
-		UserValue: m.Name + ` ` + m.Lastname,
+		UserValue: m.Name,
 	}
 }
 
 func (m *MockapiPDAMResponse) ToDomain() orders.Domain {
 	return orders.Domain{
-		UserValue:  m.Name + ` ` + m.Lastname,
+		UserValue:  m.Lastname,
 		TotalPrice: m.Bill,
 	}
 }

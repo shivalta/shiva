@@ -38,20 +38,20 @@ func (u Usecase) Checkout(userValue string, productId uint) (orders.Domain, erro
 	prodCat := strings.ToLower(prod.ProductClass.Name)
 	if prodCat == "pulsa" {
 		order.TotalPrice = (*prod.Price + prod.AdminFee) + int(float32(*prod.Price)*(prod.ProductCategory.Tax/float32(100)))
-		order.UserValue = userValue + ` ` + prod.ProductCategory.Name
+		order.UserValue = userValue + ` - ` + prod.ProductCategory.Name
 	} else if prodCat == "token" {
 		order.TotalPrice = (*prod.Price + prod.AdminFee) + int(float32(*prod.Price)*(prod.ProductCategory.Tax/float32(100)))
 		m, err := u.mockapi.GetMockListrik(userValue)
 		if err != nil {
 			return orders.Domain{}, err
 		}
-		order.UserValue = userValue + ` ` + m.UserValue
+		order.UserValue = userValue + ` - ` + m.UserValue
 	} else {
 		m, err := u.mockapi.GetMockPDAM(userValue)
 		if err != nil {
 			return orders.Domain{}, err
 		}
-		order.UserValue = userValue + ` ` + m.UserValue
+		order.UserValue = userValue + ` - ` + m.UserValue
 		order.TotalPrice = (m.TotalPrice + prod.AdminFee) + int(prod.ProductCategory.Tax/float32(100))
 	}
 	order.TotalTax = prod.ProductCategory.Tax
@@ -72,6 +72,9 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	//if err != nil {
 	//	return orders.Domain{}, err
 	//}
+	//		AccountNumber:     p.AccountNumber,
+	//		BankName:          p.Name,
+	//		ExpirationPayment: p.ExpirationDate,
 	//va := u.xendit.CreateVA()
 	panic("")
 }
