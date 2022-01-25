@@ -21,10 +21,10 @@ func InitHttp() {
 
 	//USERS ENDPOINT
 	v1.GET("/users", f.Accounts.GetAll, middleware.JWTWithConfig(f.ConfigJWT), middlewares.IsAdmin)
-	v1.POST("/users", f.Accounts.Create, middleware.JWTWithConfig(f.ConfigJWT))
-	v1.GET("/users/:userId", f.Accounts.GetById)
-	v1.DELETE("/users/:userId", f.Accounts.Delete, middleware.JWTWithConfig(f.ConfigJWT))
-	v1.PUT("/users/:userId", f.Accounts.Update)
+	v1.POST("/users", f.Accounts.Create)
+	v1.GET("/users/:userId", f.Accounts.GetById, middleware.JWTWithConfig(f.ConfigJWT), middlewares.IsUserId)
+	v1.DELETE("/users/:userId", f.Accounts.Delete, middleware.JWTWithConfig(f.ConfigJWT), middlewares.IsUserId)
+	v1.PUT("/users/:userId", f.Accounts.Update, middleware.JWTWithConfig(f.ConfigJWT), middlewares.IsUserId)
 
 	//PRODUCT CLASS ENDPOINT
 	v1.GET("/class", f.Class.GetAll)
