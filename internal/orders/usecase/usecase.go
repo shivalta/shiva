@@ -1,7 +1,6 @@
 package usecase
 
 import (
-	"fmt"
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/products"
@@ -79,11 +78,6 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	}
 
 	order := orders.Domain{
-		TotalPrice:    0,
-		TotalTax:      0,
-		TotalAdmin:    0,
-		AccountNumber: "",
-		UserValue:     "",
 		Products: orders.Products{
 			ID: prod.ID,
 			ProductClass: orders.Class{
@@ -105,8 +99,7 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 			Name:              prod.Name,
 			AdminFee:          prod.AdminFee,
 			Stock:             prod.Stock,
-			//Price:             *prod.Price,
-			IsActive: prod.IsActive,
+			IsActive:          prod.IsActive,
 		},
 		UserId:     userId,
 		BankCode:   bankCode,
@@ -141,21 +134,18 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 
 	xendit, err := u.xendit.CreateVA(strconv.Itoa(int(res.ID)), bankCode)
 
-	fmt.Println("ACCOUNT ", xendit.AccountNumber)
+	order.ID = res.ID
+	order.BankName = xendit.BankName
 	order.AccountNumber = xendit.AccountNumber
 	order.ExpirationPayment = xendit.ExpirationPayment
+	order.Status = res.Status
 
-	up, err := u.data.UpdateAfterCreateVA(order)
+	_, err = u.data.UpdateAfterCreateVA(order)
 	if err != nil {
 		return orders.Domain{}, err
 	}
 
-	//AccountNumber:
-	//	p.AccountNumber,
-	//		BankName:          p.Name,
-	//		ExpirationPayment: p.ExpirationDate,
-	//		va := u.xendit.CreateVA()
-	return up, nil
+	return order, nil
 }
 
 func (u Usecase) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {

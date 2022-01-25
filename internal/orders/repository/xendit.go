@@ -40,19 +40,19 @@ func (api *XenditAPI) PaymentChannels() ([]orders.Domain, error) {
 
 func (api *XenditAPI) CreateVA(id string, bankCode string) (orders.Domain, error) {
 	uri := api.BaseUrl + "/callback_virtual_accounts"
-	body := []byte(`{
-		"external_id":"` + id + `",
-		"bank_code":"` + bankCode + `",
-		"external_id":"PT SHIVA ALTA TBK",
-	}`)
+	body := "{\"external_id\":\"" + id + "\",\"bank_code\":\"" + bankCode + "\",\"name\":\"PT SHIVA ALTA TBK\"}"
+	bodyStr := []byte(body)
 
-	req, _ := http.NewRequest("POST", uri, bytes.NewBuffer(body))
+	req, _ := http.NewRequest("POST", uri, bytes.NewBuffer(bodyStr))
 	req.SetBasicAuth(api.ApiKey, "")
+	req.Header.Set("Content-Type", "application/json")
+
 	resp, err := api.Client.Do(req)
+
 	if err != nil {
 		return orders.Domain{}, err
 	}
-	var response dto.CreateVAResponse
+	response := dto.CreateVAResponse{}
 	err = json.NewDecoder(resp.Body).Decode(&response)
 	if err != nil {
 		return orders.Domain{}, err

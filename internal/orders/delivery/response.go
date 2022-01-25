@@ -18,12 +18,13 @@ type PaymentMethodResponse struct {
 }
 
 type CreateVAResponse struct {
-	ID                uint
-	Status            string
-	TotalPrice        int
-	AccountNumber     string
-	ExpirationPayment time.Time
-	BankCode          string
+	ID                uint      `json:"id"`
+	Status            string    `json:"status"`
+	TotalPrice        int       `json:"total_price"`
+	BankCode          string    `json:"bank_code"`
+	AccountName       string    `json:"account_name"`
+	AccountNumber     string    `json:"account_number"`
+	ExpirationPayment time.Time `json:"expiration_payment"`
 }
 
 func FromDomainToCreateVAResponse(d orders.Domain) CreateVAResponse {
@@ -34,6 +35,7 @@ func FromDomainToCreateVAResponse(d orders.Domain) CreateVAResponse {
 		AccountNumber:     d.AccountNumber,
 		ExpirationPayment: d.ExpirationPayment,
 		BankCode:          d.BankCode,
+		AccountName:       d.BankName,
 	}
 }
 
