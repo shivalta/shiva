@@ -17,6 +17,14 @@ func NewOrdersHandler(u orders.Usecase) *Http {
 	}
 }
 
+func (h *Http) PaymentMethod(c echo.Context) error {
+	data, err := h.usecase.PaymentChannels()
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return baseResponse.SuccessResponse(c, FromDomainPaymentMethodList(data), "berhasil mengambil seluruh payment method")
+}
+
 func (h *Http) CheckoutPulsa(c echo.Context) error {
 	req := new(RequestCheckout)
 	if err := c.Bind(req); err != nil {

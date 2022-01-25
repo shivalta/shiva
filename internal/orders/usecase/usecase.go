@@ -25,6 +25,14 @@ func NewOrdersUsecase(data orders.Repository, xendit orders.XenditRepository, mo
 	}
 }
 
+func (u Usecase) PaymentChannels() ([]orders.Domain, error) {
+	paymentMethod, err := u.xendit.PaymentChannels()
+	if err != nil {
+		return []orders.Domain{}, err
+	}
+	return paymentMethod, nil
+}
+
 func (u Usecase) CheckoutPulsa(userValue string, productId uint, isLoggedIn bool) (orders.Domain, error) {
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired

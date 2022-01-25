@@ -9,6 +9,11 @@ type CheckoutResponse struct {
 	Product    ResponseProduct
 }
 
+type PaymentMethodResponse struct {
+	BankName string `json:"bank_name"`
+	BankCode string `json:"bank_code"`
+}
+
 type ResponseProduct struct {
 	ID                uint               `json:"id"`
 	ProductClass      ResponseClass      `json:"product_class,omitempty"`
@@ -35,6 +40,21 @@ type ResponseCategories struct {
 	Image string  `json:"image,omitempty"`
 	Tax   float32 `json:"tax"`
 	Slug  string  `json:"slug,omitempty"`
+}
+
+func FromDomainPaymentMethod(d orders.Domain) PaymentMethodResponse {
+	return PaymentMethodResponse{
+		BankName: d.BankName,
+		BankCode: d.BankCode,
+	}
+}
+
+func FromDomainPaymentMethodList(d []orders.Domain) []PaymentMethodResponse {
+	var data []PaymentMethodResponse
+	for _, v := range d {
+		data = append(data, FromDomainPaymentMethod(v))
+	}
+	return data
 }
 
 func FromDomainToCheckout(d orders.Domain) CheckoutResponse {

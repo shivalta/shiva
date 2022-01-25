@@ -55,6 +55,8 @@ func InitHttp() {
 	v1.GET("/order/listrik", f.Orders.CheckoutListrik)
 	v1.GET("/order/pdam", f.Orders.CheckoutPDAM)
 
+	v1.GET("/payment-list", f.Orders.PaymentMethod)
+
 	err := e.Start(":1111")
 	if err != nil {
 		return

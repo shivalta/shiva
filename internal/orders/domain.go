@@ -76,6 +76,7 @@ type Usecase interface {
 	CheckoutPDAM(userValue string, productId uint, isLoggedIn bool) (Domain, error)
 	CheckoutListrik(userValue string, productId uint, isLoggedIn bool) (Domain, error)
 	CreateVA(productId uint, userId uint, bankCode string) (Domain, error)
+	PaymentChannels() ([]Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
 }
@@ -91,6 +92,7 @@ type Repository interface {
 
 type XenditRepository interface {
 	CreateVA(id string, bankName string, bankCode string) (Domain, error)
+	PaymentChannels() ([]Domain, error)
 }
 
 type MockupIoRepository interface {
