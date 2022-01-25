@@ -12,11 +12,13 @@ type Domain struct {
 	PendingDateTime   time.Time
 	FailDateTime      time.Time
 	ExpirationPayment time.Time
+	UserId            uint
 	TotalPrice        int
 	TotalTax          float32
 	TotalAdmin        int
 	AccountNumber     string
 	UserValue         string
+	UniqueValue       string
 	Products          Products
 	DetailTransaction DetailTransactionDomain
 	BankName          string
@@ -35,7 +37,7 @@ type DetailTransactionDomain struct {
 	DetailUserValue           string
 	DetailProductClassName    string
 	DetailProductClassImage   string
-	DetailProductClassTax     int
+	DetailProductClassTax     float32
 	DetailProductCategoryName string
 }
 
@@ -82,13 +84,14 @@ type Usecase interface {
 }
 
 type Repository interface {
-	CreateTransaction(userId uint, bankCode string, domain Domain) (Domain, error)
+	CreateTransaction(domain Domain) (Domain, error)
+	UpdateAfterCreateVA(domain Domain) (Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
 }
 
 type XenditRepository interface {
-	CreateVA(id string, bankName string, bankCode string) (Domain, error)
+	CreateVA(id string, bankCode string) (Domain, error)
 	PaymentChannels() ([]Domain, error)
 }
 

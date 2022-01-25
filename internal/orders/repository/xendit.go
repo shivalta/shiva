@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"shiva/shiva-auth/internal/orders"
@@ -37,9 +38,15 @@ func (api *XenditAPI) PaymentChannels() ([]orders.Domain, error) {
 	return dto.PaymentChannelToDomainList(response), nil
 }
 
-func (api *XenditAPI) CreateVA(id string, bankName string, bankCode string) (orders.Domain, error) {
+func (api *XenditAPI) CreateVA(id string, bankCode string) (orders.Domain, error) {
 	uri := api.BaseUrl + "/callback_virtual_accounts"
-	req, _ := http.NewRequest("POST", uri, nil)
+	body := []byte(`{
+		"external_id":"` + id + `",
+		"bank_code":"` + bankCode + `",
+		"external_id":"PT SHIVA ALTA TBK",
+	}`)
+
+	req, _ := http.NewRequest("POST", uri, bytes.NewBuffer(body))
 	req.SetBasicAuth(api.ApiKey, "")
 	resp, err := api.Client.Do(req)
 	if err != nil {

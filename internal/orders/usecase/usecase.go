@@ -5,6 +5,7 @@ import (
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/products"
 	"shiva/shiva-auth/utils/baseErrors"
+	"strconv"
 	"strings"
 )
 
@@ -71,22 +72,90 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired
 	}
-	//prod, err := u.product.GetById(productId)
-	//if err != nil {
-	//	return orders.Domain{}, err
-	//}
-	//d := orders.Domain{
-	//
-	//}
-	//res, err := u.data.CreateTransaction(userId, bankCode, prod)
-	//if err != nil {
-	//	return orders.Domain{}, err
-	//}
-	//AccountNumber:     p.AccountNumber,
-	//BankName:          p.Name,
-	//ExpirationPayment: p.ExpirationDate,
-	//va := u.xendit.CreateVA()
-	panic("")
+	prod, err := u.product.GetById(productId)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
+	order := orders.Domain{
+		TotalPrice:    0,
+		TotalTax:      0,
+		TotalAdmin:    0,
+		AccountNumber: "",
+		UserValue:     "",
+		Products: orders.Products{
+			ID: prod.ID,
+			ProductClass: orders.Class{
+				ID:       prod.ProductClass.ID,
+				Name:     prod.ProductClass.Name,
+				IsPasca:  prod.ProductClass.IsPasca,
+				ImageUrl: prod.ProductClass.ImageUrl,
+			},
+			ProductClassId: prod.ProductClassId,
+			ProductCategory: orders.Categories{
+				ID:             prod.ProductCategory.ID,
+				ProductClassId: prod.ProductCategory.ProductClassId,
+				Name:           prod.ProductCategory.Name,
+				ImageUrl:       prod.ProductCategory.ImageUrl,
+				Tax:            prod.ProductCategory.Tax,
+			},
+			ProductCategoryId: prod.ProductCategoryId,
+			Sku:               prod.Sku,
+			Name:              prod.Name,
+			AdminFee:          prod.AdminFee,
+			Stock:             prod.Stock,
+			//Price:             *prod.Price,
+			IsActive: prod.IsActive,
+		},
+		UserId:     userId,
+		BankCode:   bankCode,
+		IsLoggedin: false,
+	}
+
+	prodCat := strings.ToLower(prod.ProductClass.Name)
+
+	if prodCat == "pulsa" {
+		order.TotalPrice = (*prod.Price + prod.AdminFee) + int(float32(*prod.Price)*(prod.ProductCategory.Tax/float32(100)))
+		order.UserValue = prod.ProductCategory.Name
+	} else if prodCat == "token" {
+		order.TotalPrice = (*prod.Price + prod.AdminFee) + int(float32(*prod.Price)*(prod.ProductCategory.Tax/float32(100)))
+		m, err := u.mockapi.GetMockListrik(userValue)
+		if err != nil {
+			return orders.Domain{}, err
+		}
+		order.UserValue = m.UserValue
+	} else {
+		m, err := u.mockapi.GetMockPDAM(userValue)
+		if err != nil {
+			return orders.Domain{}, err
+		}
+		order.UserValue = m.UserValue
+		order.TotalPrice = (m.TotalPrice + prod.AdminFee) + int(prod.ProductCategory.Tax/float32(100))
+	}
+
+	res, err := u.data.CreateTransaction(order)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
+	xendit, err := u.xendit.CreateVA(strconv.Itoa(int(res.ID)), bankCode)
+	//		AccountNumber:     p.AccountNumber,
+	//		BankName:          p.Name,
+	//		ExpirationPayment: p.ExpirationDate,
+	order.AccountNumber = xendit.AccountNumber
+	order.ExpirationPayment = xendit.ExpirationPayment
+
+	up, err := u.data.UpdateAfterCreateVA(order)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
+	//AccountNumber:
+	//	p.AccountNumber,
+	//		BankName:          p.Name,
+	//		ExpirationPayment: p.ExpirationDate,
+	//		va := u.xendit.CreateVA()
+	return up, nil
 }
 
 func (u Usecase) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {

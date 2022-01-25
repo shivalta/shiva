@@ -1,6 +1,9 @@
 package delivery
 
-import "shiva/shiva-auth/internal/orders"
+import (
+	"shiva/shiva-auth/internal/orders"
+	"time"
+)
 
 type CheckoutResponse struct {
 	UserValue  string  `json:"user_value"`
@@ -12,6 +15,26 @@ type CheckoutResponse struct {
 type PaymentMethodResponse struct {
 	BankName string `json:"bank_name"`
 	BankCode string `json:"bank_code"`
+}
+
+type CreateVAResponse struct {
+	ID                uint
+	Status            string
+	TotalPrice        int
+	AccountNumber     string
+	ExpirationPayment time.Time
+	BankCode          string
+}
+
+func FromDomainToCreateVAResponse(d orders.Domain) CreateVAResponse {
+	return CreateVAResponse{
+		ID:                d.ID,
+		Status:            d.Status,
+		TotalPrice:        d.TotalPrice,
+		AccountNumber:     d.AccountNumber,
+		ExpirationPayment: d.ExpirationPayment,
+		BankCode:          d.BankCode,
+	}
 }
 
 func FromDomainPaymentMethod(d orders.Domain) PaymentMethodResponse {

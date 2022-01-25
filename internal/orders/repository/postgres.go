@@ -3,6 +3,7 @@ package repository
 import (
 	"gorm.io/gorm"
 	"shiva/shiva-auth/internal/orders"
+	"time"
 )
 
 type pgOrdersRepo struct {
@@ -15,7 +16,24 @@ func NewOrdersRepo(psql *gorm.DB) orders.Repository {
 	}
 }
 
-func (p pgOrdersRepo) CreateTransaction(userId uint, bankCode string, domain orders.Domain) (orders.Domain, error) {
+func (p pgOrdersRepo) CreateTransaction(domain orders.Domain) (orders.Domain, error) {
+	t := FromDomainToTransaction(domain)
+	d := FromDomainToDetail(domain)
+	t.PendingDateTime = time.Now().Local()
+	t.Status = "pending"
+	err := p.Psql.Create(&t)
+	if err.Error != nil {
+		return orders.Domain{}, err.Error
+	}
+	d.TransactionId = t.ID
+	err = p.Psql.Create(&d)
+	if err.Error != nil {
+		return orders.Domain{}, err.Error
+	}
+	return t.ToDomain(), nil
+}
+
+func (p pgOrdersRepo) UpdateAfterCreateVA(domain orders.Domain) (orders.Domain, error) {
 	panic("implement me")
 }
 
