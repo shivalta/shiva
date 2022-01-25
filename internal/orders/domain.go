@@ -82,7 +82,7 @@ type Usecase interface {
 }
 
 type Repository interface {
-	CreateTransaction(productId uint, userId uint, bankCode string) (Domain, error)
+	CreateTransaction(userId uint, bankCode string, domain Domain) (Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)
 }
