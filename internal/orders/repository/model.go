@@ -33,7 +33,7 @@ type DetailTransactions struct {
 	Sku                       string
 	Name                      string
 	AdminFee                  int
-	Price                     int
+	Price                     *int
 	DetailUniqueUser          string
 	DetailUniqueValue         string
 	DetailProductClassName    string

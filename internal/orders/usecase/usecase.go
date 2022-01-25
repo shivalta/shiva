@@ -99,6 +99,7 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 			Name:              prod.Name,
 			AdminFee:          prod.AdminFee,
 			Stock:             prod.Stock,
+			Price:             prod.Price,
 			IsActive:          prod.IsActive,
 		},
 		UserId:     userId,
