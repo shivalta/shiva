@@ -72,9 +72,9 @@ type Categories struct {
 }
 
 type Usecase interface {
-	CheckoutPulsa(userValue string, productId uint) (Domain, error)
-	CheckoutPDAM(userValue string, productId uint) (Domain, error)
-	CheckoutListrik(userValue string, productId uint) (Domain, error)
+	CheckoutPulsa(userValue string, productId uint, isLoggedIn bool) (Domain, error)
+	CheckoutPDAM(userValue string, productId uint, isLoggedIn bool) (Domain, error)
+	CheckoutListrik(userValue string, productId uint, isLoggedIn bool) (Domain, error)
 	CreateVA(productId uint, userId uint, bankCode string) (Domain, error)
 	WebhookCreateVA(domain Domain) (Domain, error)
 	WebhookPaidVA(domain Domain) (Domain, error)

@@ -2,6 +2,7 @@ package http
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/factory"
 )
@@ -47,6 +48,9 @@ func InitHttp() {
 	v1.PUT("/products/:id", f.Products.Update)
 
 	//CHECKOUT ENDPOINT
+	v1.GET("/order/i/pulsa", f.Orders.CheckoutPulsa, middleware.JWTWithConfig(f.ConfigJWT))
+	v1.GET("/order/i/listrik", f.Orders.CheckoutListrik, middleware.JWTWithConfig(f.ConfigJWT))
+	v1.GET("/order/i/pdam", f.Orders.CheckoutPDAM, middleware.JWTWithConfig(f.ConfigJWT))
 	v1.GET("/order/pulsa", f.Orders.CheckoutPulsa)
 	v1.GET("/order/listrik", f.Orders.CheckoutListrik)
 	v1.GET("/order/pdam", f.Orders.CheckoutPDAM)

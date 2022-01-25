@@ -25,7 +25,7 @@ func NewOrdersUsecase(data orders.Repository, xendit orders.XenditRepository, mo
 	}
 }
 
-func (u Usecase) CheckoutPulsa(userValue string, productId uint) (orders.Domain, error) {
+func (u Usecase) CheckoutPulsa(userValue string, productId uint, isLoggedIn bool) (orders.Domain, error) {
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired
 	}
@@ -59,10 +59,11 @@ func (u Usecase) CheckoutPulsa(userValue string, productId uint) (orders.Domain,
 		IsActive: prod.IsActive,
 	}
 	order.UserValue = userValue
+	order.IsLoggedin = isLoggedIn
 	return order, nil
 }
 
-func (u Usecase) CheckoutListrik(userValue string, productId uint) (orders.Domain, error) {
+func (u Usecase) CheckoutListrik(userValue string, productId uint, isLoggedIn bool) (orders.Domain, error) {
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired
 	}
@@ -96,10 +97,11 @@ func (u Usecase) CheckoutListrik(userValue string, productId uint) (orders.Domai
 		IsActive: prod.IsActive,
 	}
 	order.UserValue = userValue
+	order.IsLoggedin = isLoggedIn
 	return order, nil
 }
 
-func (u Usecase) CheckoutPDAM(userValue string, productId uint) (orders.Domain, error) {
+func (u Usecase) CheckoutPDAM(userValue string, productId uint, isLoggedIn bool) (orders.Domain, error) {
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired
 	}
@@ -137,6 +139,7 @@ func (u Usecase) CheckoutPDAM(userValue string, productId uint) (orders.Domain, 
 		return orders.Domain{}, err
 	}
 	order.UserValue = userValue + ` - ` + pdam.UserValue
+	order.IsLoggedin = isLoggedIn
 	return order, nil
 }
 

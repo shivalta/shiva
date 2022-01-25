@@ -16,6 +16,16 @@ type JWTCustomClaims struct {
 	jwt.StandardClaims
 }
 
+type CustomContext struct {
+	echo.Context
+}
+
+func (c *CustomContext) GetUserId() (uint, error) {
+	user := c.Context.Get("user").(*jwt.Token)
+	claims := user.Claims.(*JWTCustomClaims)
+	return claims.ID, nil
+}
+
 type ConfigJWT struct {
 	SecretJWT       string
 	ExpiresDuration int
@@ -57,6 +67,13 @@ func IsAdmin(next echo.HandlerFunc) echo.HandlerFunc {
 			return echo.ErrUnauthorized
 		}
 		return next(c)
+	}
+}
+
+func GetUserId(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		cc := &CustomContext{c}
+		return next(cc)
 	}
 }
 

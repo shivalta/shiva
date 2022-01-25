@@ -1,6 +1,7 @@
 package factory
 
 import (
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"
 	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/configs/driver"
@@ -31,6 +32,7 @@ type PresenterHTTP struct {
 	Class      *d_class.Http
 	Products   *d_products.Http
 	Orders     *d_orders.Http
+	ConfigJWT  middleware.JWTConfig
 }
 
 func InitFactoryHTTP() PresenterHTTP {
@@ -63,9 +65,10 @@ func InitFactoryHTTP() PresenterHTTP {
 
 	return PresenterHTTP{
 		Accounts:   accountsDelivery,
-		Class:      classDelivery,
 		Categories: categoriesDelivery,
+		Class:      classDelivery,
 		Products:   productsDelivery,
 		Orders:     ordersDelivery,
+		ConfigJWT:  configJWT.Init(),
 	}
 }
