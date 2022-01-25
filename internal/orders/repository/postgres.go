@@ -30,6 +30,10 @@ func (p pgOrdersRepo) CreateTransaction(domain orders.Domain) (orders.Domain, er
 	if err.Error != nil {
 		return orders.Domain{}, err.Error
 	}
+	err = p.Psql.Preload("DetailTransactions").Preload("Products").Find(&t)
+	if err.Error != nil {
+		return orders.Domain{}, err.Error
+	}
 	return t.ToDomain(), nil
 }
 

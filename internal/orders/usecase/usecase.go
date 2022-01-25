@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"fmt"
 	"github.com/go-playground/validator/v10"
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/products"
@@ -138,10 +139,11 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 		return orders.Domain{}, err
 	}
 
+	fmt.Println("DORW")
+
 	xendit, err := u.xendit.CreateVA(strconv.Itoa(int(res.ID)), bankCode)
-	//		AccountNumber:     p.AccountNumber,
-	//		BankName:          p.Name,
-	//		ExpirationPayment: p.ExpirationDate,
+	fmt.Println("DORWZZZ")
+
 	order.AccountNumber = xendit.AccountNumber
 	order.ExpirationPayment = xendit.ExpirationPayment
 
