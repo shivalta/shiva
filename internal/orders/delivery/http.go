@@ -18,6 +18,19 @@ func NewOrdersHandler(u orders.Usecase) *Http {
 	}
 }
 
+func (h *Http) GetHistory(c echo.Context) error {
+	u := middlewares.CustomContext{Context: c}
+	userId, err := u.GetUserId()
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	res, err := h.usecase.GetHistory(userId)
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return baseResponse.SuccessResponse(c, FromDomainToTransactionResponseList(res), "berhasil mendapatkan riwayat transaksi")
+}
+
 func (h *Http) CreateVA(c echo.Context) error {
 	req := new(RequestPayment)
 	if err := c.Bind(req); err != nil {

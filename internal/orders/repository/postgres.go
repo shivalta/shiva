@@ -37,29 +37,28 @@ func (p pgOrdersRepo) CreateTransaction(domain orders.Domain) (orders.Domain, er
 	return t.ToDomain(), nil
 }
 
+func (p pgOrdersRepo) GetHistory(userId uint) ([]orders.Domain, error) {
+	var model []Transactions
+	e := p.Psql.Preload("Products").Preload("DetailTransactions").Find(&model, "user_id = ?", userId)
+	if e.Error != nil {
+		return []orders.Domain{}, e.Error
+	}
+	return ToDomainList(model), nil
+}
+
 func (p pgOrdersRepo) UpdateAfterCreateVA(domain orders.Domain) (orders.Domain, error) {
 	t := FromDomainToTransaction(domain)
-	err := p.Psql.Create(&t)
-	if err.Error != nil {
-		return orders.Domain{}, err.Error
-	}
-	err = p.Psql.Preload("DetailTransactions").Preload("Products").Find(&t)
+	model := Transactions{}
+	err := p.Psql.Model(&model).Where("id = ?", domain.ID).Updates(Transactions{
+		ExpirationPayment: t.ExpirationPayment,
+		AccountNumber:     t.AccountNumber,
+		BankCode:          t.BankCode,
+	})
 	if err.Error != nil {
 		return orders.Domain{}, err.Error
 	}
 	return t.ToDomain(), nil
 }
-
-//func (p pgOrdersRepo) CreateTransaction(productId uint, userId uint, bankCode string) (orders.Domain, error) {
-//	u := FromDomain(user)
-//	err := p.Psql.Create(&u)
-//	if err.Error != nil {
-//		return accounts.Domain{}, err.Error
-//	}
-//	return u.UserToDomain(), nil
-//	panic("")
-//
-//}
 
 func (p pgOrdersRepo) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {
 	panic("implement me")

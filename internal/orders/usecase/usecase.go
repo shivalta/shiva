@@ -60,6 +60,14 @@ func (u Usecase) Checkout(userValue string, productId uint) (orders.Domain, erro
 	return order, nil
 }
 
+func (u Usecase) GetHistory(userId uint) ([]orders.Domain, error) {
+	h, err := u.data.GetHistory(userId)
+	if err != nil {
+		return []orders.Domain{}, err
+	}
+	return h, nil
+}
+
 func (u Usecase) PaymentChannels() ([]orders.Domain, error) {
 	paymentMethod, err := u.xendit.PaymentChannels()
 	if err != nil {

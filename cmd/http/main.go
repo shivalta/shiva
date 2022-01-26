@@ -50,6 +50,7 @@ func InitHttp() {
 	//CHECKOUT ENDPOINT
 	v1.POST("/checkout", f.Orders.Checkout)
 	v1.POST("/payment", f.Orders.CreateVA, middleware.JWTWithConfig(f.ConfigJWT))
+	v1.GET("/history", f.Orders.GetHistory, middleware.JWTWithConfig(f.ConfigJWT))
 
 	v1.GET("/payment-list", f.Orders.PaymentMethod)
 
