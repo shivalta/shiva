@@ -174,7 +174,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		return "", baseErrors.ErrAmountNotMatch
+		return strconv.Itoa(t.TotalPrice) + ` ` + strconv.Itoa(amount), baseErrors.ErrAmountNotMatch
 	} else {
 		status = "bayar"
 	}
