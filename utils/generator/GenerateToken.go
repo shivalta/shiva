@@ -1,26 +1,19 @@
 package generator
 
 import (
-	"crypto/rand"
 	"fmt"
+	"math/rand"
+	"strconv"
 )
 
-const accept = "1234567890"
-
 func GenerateToken() (string, error) {
-	buffer := make([]byte, 5)
-	_, err := rand.Read(buffer)
-	if err != nil {
-		return "", err
-	}
-
-	otpCharsLength := len(accept)
 	token := ""
 	for x := 0; x < 5; x++ {
+		temp := ""
 		for i := 0; i < 4; i++ {
-			buffer[i] = accept[int(buffer[i])%otpCharsLength]
+			temp = temp + fmt.Sprintf("%s", strconv.Itoa(rand.Intn(10)))
 		}
-		token = token + fmt.Sprintf("%s ", string(buffer))
+		token = token + fmt.Sprintf("%s ", temp)
 	}
 
 	return token, nil
