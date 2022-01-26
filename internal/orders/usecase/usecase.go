@@ -255,7 +255,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 				 <td>Detail</td>
 			  </tr>
 			  <tr>
-				 <td>` + strings.ToUpper(prod.ProductCategory.Name) + `</td>
+				 <td>` + strings.ToUpper(prod.ProductClass.Name) + ` ` + strings.ToUpper(prod.ProductCategory.Name) + `</td>
 				 <td>` + strings.ToUpper(uniqueValue) + `</td>
 			  </tr>
 		   </tbody>
