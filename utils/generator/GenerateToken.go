@@ -20,7 +20,7 @@ func GenerateToken() (string, error) {
 		for i := 0; i < 4; i++ {
 			buffer[i] = accept[int(buffer[i])%otpCharsLength]
 		}
-		token = fmt.Sprintf("%s ", string(buffer))
+		token = token + fmt.Sprintf("%s ", string(buffer))
 	}
 
 	return token, nil

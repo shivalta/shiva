@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/orders/repository/dto"
+	"time"
 )
 
 type XenditAPI struct {
@@ -40,7 +41,8 @@ func (api *XenditAPI) PaymentChannels() ([]orders.Domain, error) {
 
 func (api *XenditAPI) CreateVA(id string, bankCode string) (orders.Domain, error) {
 	uri := api.BaseUrl + "/callback_virtual_accounts"
-	body := "{\"external_id\":\"" + id + "\",\"bank_code\":\"" + bankCode + "\",\"name\":\"PT SHIVA ALTA TBK\"}"
+	txen := time.Now().Local().Add(24 * time.Hour).Format(time.RFC3339)
+	body := "{\"external_id\":\"" + id + "\",\"bank_code\":\"" + bankCode + "\",\"name\":\"PT SHIVA ALTA TBK\",\"expiration_date\":\"" + txen + "\"}"
 	bodyStr := []byte(body)
 
 	req, _ := http.NewRequest("POST", uri, bytes.NewBuffer(bodyStr))

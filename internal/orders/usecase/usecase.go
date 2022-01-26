@@ -208,13 +208,15 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 		return "", baseErrors.ErrExpiredPay
 	}
 	if t.TotalPrice != amount {
-		_, err := u.data.WebhookPaidVA(externalId, "kadaluarsa")
+		status = "kadaluarsa"
+		_, err := u.data.WebhookPaidVA(externalId, status)
 		if err != nil {
 			return "", err
 		}
 		return strconv.Itoa(t.TotalPrice) + ` ` + strconv.Itoa(amount), baseErrors.ErrAmountNotMatch
 	}
-	_, err = u.data.WebhookPaidVA(externalId, "bayar")
+	status = "bayar"
+	_, err = u.data.WebhookPaidVA(externalId, status)
 	if err != nil {
 		return "", err
 	}
@@ -226,7 +228,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 
 	uniqueValue := prod.Name
 
-	if t.Products.ProductClass.Name == "token" || t.Products.ProductClass.Name == "listrik" || t.Products.ProductClass.Name == "pln" {
+	if prod.ProductClass.Name == "token" || prod.ProductClass.Name == "listrik" || prod.ProductClass.Name == "pln" {
 		uniqueValue, err = generator.GenerateToken()
 		if err != nil {
 			return "", err
@@ -244,8 +246,8 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 
 	bodyEmail := `
 		<h2>Hello ` + us.Name + `!</h2><br/>
-		<i>No Invoice: SHIVA/` + strconv.Itoa(int(t.ID)) + `<br/><br/>
 		Pembayaran kamu telah valid, dengan status <b>` + status + `</b><br/>
+		<i>No Invoice: SHIVA/` + strconv.Itoa(int(t.ID)) + `<br/><br/>
 		<table border="1" width="100%" >
 		   <tbody>
 			  <tr>
@@ -254,7 +256,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 			  </tr>
 			  <tr>
 				 <td>` + strings.ToUpper(prod.ProductCategory.Name) + `</td>
-				 <td>` + strings.ToUpper(uniqueValue) + `DEBUGSYALALA</td>
+				 <td>` + strings.ToUpper(uniqueValue) + `</td>
 			  </tr>
 		   </tbody>
 		</table>
