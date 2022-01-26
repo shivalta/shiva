@@ -2,6 +2,8 @@ package usecase
 
 import (
 	"github.com/go-playground/validator/v10"
+	"shiva/shiva-auth/helpers/smtpEmail"
+	"shiva/shiva-auth/internal/accounts"
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/products"
 	"shiva/shiva-auth/utils/baseErrors"
@@ -16,15 +18,17 @@ type Usecase struct {
 	xendit   orders.XenditRepository
 	mockapi  orders.MockupIoRepository
 	product  products.Usecase
+	account  accounts.Usecase
 	validate *validator.Validate
 }
 
-func NewOrdersUsecase(data orders.Repository, xendit orders.XenditRepository, mockapi orders.MockupIoRepository, product products.Usecase) orders.Usecase {
+func NewOrdersUsecase(account accounts.Usecase, data orders.Repository, xendit orders.XenditRepository, mockapi orders.MockupIoRepository, product products.Usecase) orders.Usecase {
 	return &Usecase{
 		data:     data,
 		xendit:   xendit,
 		mockapi:  mockapi,
 		product:  product,
+		account:  account,
 		validate: validator.New(),
 	}
 }
@@ -82,6 +86,12 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	if userValue == "" {
 		return orders.Domain{}, baseErrors.ErrNoHpRequired
 	}
+
+	us, err := u.account.GetById(userId)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
 	prod, err := u.product.GetById(productId)
 	if err != nil {
 		return orders.Domain{}, err
@@ -139,6 +149,7 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	}
 
 	res, err := u.data.CreateTransaction(order)
+
 	if err != nil {
 		return orders.Domain{}, err
 	}
@@ -152,6 +163,35 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	order.Status = res.Status
 
 	_, err = u.data.UpdateAfterCreateVA(order)
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
+	bodyEmail := `
+		<h2>Hello ` + us.Name + `!</h2><br/>
+		<i>No Invoice: SHIVA/ ` + strconv.Itoa(int(order.ID)) + `/X
+		Ada pesanan yang baru kamu buat : <br/>
+		<table border="1" width="100%" >
+		   <tbody>
+			  <tr>
+				 <td>#</td>
+				 <td>Produk</td>
+				 <td>Total Yang Dibayar</td>
+			  </tr>
+			  <tr>
+				 <td>1</td>
+				 <td>` + strings.ToUpper(prod.Name) + `</td>
+				 <td>` + strconv.Itoa(order.TotalPrice) + `</td>
+			  </tr>
+		   </tbody>
+		</table><br/><br/>
+		Silakan bayar pada berikut ini :  <br/>
+		<b>Bank : ` + xendit.BankName + `<br/>
+		Virtual Akun : ` + xendit.AccountNumber + `</b><br/><br/>
+		Thank you<br/>
+		Have a nice day & stay healthy!`
+	//`<br><br>Regards,<br>Shiva Admin`
+	err = smtpEmail.SendMail([]string{us.Email}, "SHIVA: Orderanmu Menunggu Pembayaran!", bodyEmail)
 	if err != nil {
 		return orders.Domain{}, err
 	}
@@ -183,7 +223,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 		return "", err
 	}
 
-	if t.Products.ProductClass.Name == "pln" {
+	if t.Products.ProductClass.Name == "token" || t.Products.ProductClass.Name == "listrik" || t.Products.ProductClass.Name == "pln" {
 		token, err := generator.GenerateToken()
 		if err != nil {
 			return "", err

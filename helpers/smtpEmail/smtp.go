@@ -14,8 +14,7 @@ func SendMail(mailTo []string, subject string, message string) error {
 	body := "From: " + viper.GetString(`smtp.sender_name`) + "\n" +
 		"To: " + strings.Join(mailTo, ",") + "\n" +
 		"Cc: " + strings.Join(bcc, ",") + "\n" +
-		"Subject: " + subject + mime +
-		message
+		"Subject: " + subject + mime + message
 
 	auth := smtp.PlainAuth("", viper.GetString(`smtp.email`), viper.GetString(`smtp.password`), viper.GetString(`smtp.host`))
 	smtpAddr := fmt.Sprintf("%s:%d", viper.GetString(`smtp.host`), viper.GetInt(`smtp.port`))

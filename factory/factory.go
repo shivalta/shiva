@@ -60,7 +60,7 @@ func InitFactoryHTTP() PresenterHTTP {
 	ordersMockapi := r_orders.NewMockupApi(viper.GetString(`mockapi.base_url`))
 	ordersXendit := r_orders.NewXenditAPI(viper.GetString(`xendit.base_url`), viper.GetString(`xendit.api_key`))
 	ordersRepo := r_orders.NewOrdersRepo(driver.Psql)
-	ordersUsecase := u_orders.NewOrdersUsecase(ordersRepo, ordersXendit, ordersMockapi, productsUsecase)
+	ordersUsecase := u_orders.NewOrdersUsecase(accountsUsecase, ordersRepo, ordersXendit, ordersMockapi, productsUsecase)
 	ordersDelivery := d_orders.NewOrdersHandler(ordersUsecase)
 
 	return PresenterHTTP{
