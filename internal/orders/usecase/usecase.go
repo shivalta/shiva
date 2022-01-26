@@ -5,8 +5,10 @@ import (
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/internal/products"
 	"shiva/shiva-auth/utils/baseErrors"
+	"shiva/shiva-auth/utils/generator"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Usecase struct {
@@ -157,10 +159,39 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 	return order, nil
 }
 
-func (u Usecase) WebhookCreateVA(domain orders.Domain) (orders.Domain, error) {
-	panic("implement me")
-}
+func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
+	t, err := u.data.GetById(externalId)
+	status := ""
+	if err != nil {
+		return "", err
+	}
+	if t.ExpirationPayment.Unix() < time.Now().Local().Unix() {
+		return "", baseErrors.ErrExpiredPay
+	}
+	if t.Amount != amount {
+		status = "kadaluarsa"
+		_, err := u.data.WebhookPaidVA(externalId, "kadaluarsa")
+		if err != nil {
+			return "", err
+		}
+		return "", baseErrors.ErrAmountNotMatch
+	} else {
+		status = "bayar"
+	}
+	_, err = u.data.WebhookPaidVA(externalId, "bayar")
+	if err != nil {
+		return "", err
+	}
 
-func (u Usecase) WebhookPaidVA(domain orders.Domain) (orders.Domain, error) {
-	panic("implement me")
+	if t.Products.ProductClass.Name == "pln" {
+		token, err := generator.GenerateToken()
+		if err != nil {
+			return "", err
+		}
+		err = u.data.UpdateUniqueValue(externalId, token)
+		if err != nil {
+			return "", err
+		}
+	}
+	return status, nil
 }

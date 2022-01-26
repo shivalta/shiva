@@ -6,6 +6,7 @@ import (
 	"shiva/shiva-auth/cmd/http/middlewares"
 	"shiva/shiva-auth/internal/orders"
 	"shiva/shiva-auth/utils/baseResponse"
+	"shiva/shiva-auth/utils/converter"
 )
 
 type Http struct {
@@ -66,4 +67,20 @@ func (h *Http) Checkout(c echo.Context) error {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
 	}
 	return baseResponse.SuccessResponse(c, FromDomainToCheckout(res), "berhasil mendapatkan detail checkout")
+}
+
+func (h *Http) PaidXenditCallback(c echo.Context) error {
+	req := new(XenditCallbackRequest)
+	if err := c.Bind(req); err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	id, _ := converter.StringToUint(req.ExternalId)
+	res, err := h.usecase.WebhookPaidVA(id, req.Amount)
+	if err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	if err := c.Bind(req); err != nil {
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+	}
+	return baseResponse.SuccessResponse(c, ToXenditCallbackResponse(req.ExternalId, res), "xendit callback berhasil")
 }

@@ -80,16 +80,16 @@ type Usecase interface {
 	CreateVA(productId uint, userId uint, bankCode string, userValue string) (Domain, error)
 	PaymentChannels() ([]Domain, error)
 	GetHistory(userId uint) ([]Domain, error)
-	WebhookCreateVA(domain Domain) (Domain, error)
-	WebhookPaidVA(domain Domain) (Domain, error)
+	WebhookPaidVA(externalId uint, amount int) (string, error)
 }
 
 type Repository interface {
 	CreateTransaction(domain Domain) (Domain, error)
 	UpdateAfterCreateVA(domain Domain) (Domain, error)
+	UpdateUniqueValue(transactionId uint, uniqueValue string) error
+	GetById(id uint) (Domain, error)
 	GetHistory(userId uint) ([]Domain, error)
-	WebhookCreateVA(domain Domain) (Domain, error)
-	WebhookPaidVA(domain Domain) (Domain, error)
+	WebhookPaidVA(externalId uint, status string) (Domain, error)
 }
 
 type XenditRepository interface {

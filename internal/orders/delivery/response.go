@@ -5,6 +5,18 @@ import (
 	"time"
 )
 
+type XenditCallbackResponse struct {
+	ExternalId string `json:"external_id"`
+	Status     string `json:"status"`
+}
+
+func ToXenditCallbackResponse(externalId string, status string) XenditCallbackResponse {
+	return XenditCallbackResponse{
+		ExternalId: externalId,
+		Status:     status,
+	}
+}
+
 type TransactionsResponse struct {
 	ID                uint                    `json:"id"`
 	DetailTransaction DetailTransactionDomain `json:"detail_transaction"`

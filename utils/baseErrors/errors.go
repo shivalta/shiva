@@ -31,6 +31,8 @@ var (
 
 	//ORDERS
 	ErrNoHpRequired      = errors.New("nomor hp harus diisi!")
+	ErrExpiredPay        = errors.New("pembayaran melewati batas tenggang!")
+	ErrAmountNotMatch    = errors.New("total tagihan tidak sesuai dengan pembayaran!")
 	ErrNoPdamRequired    = errors.New("nomor pdam harus diisi!")
 	ErrNoListrikRequired = errors.New("nomor listrik harus diisi!")
 )
