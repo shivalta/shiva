@@ -185,7 +185,7 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 			  </tr>
 		   </tbody>
 		</table><br/><br/>
-		Silakan bayar pada berikut ini :  <br/>
+		Silakan bayar dengan detail berikut ini :  <br/>
 		<b>Bank : ` + xendit.BankName + `<br/>
 		Virtual Akun : ` + xendit.AccountNumber + `</b><br/><br/>
 		Thank you<br/>
