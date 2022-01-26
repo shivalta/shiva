@@ -168,7 +168,7 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 	if t.ExpirationPayment.Unix() < time.Now().Local().Unix() {
 		return "", baseErrors.ErrExpiredPay
 	}
-	if t.Amount != amount {
+	if t.TotalPrice != amount {
 		status = "kadaluarsa"
 		_, err := u.data.WebhookPaidVA(externalId, "kadaluarsa")
 		if err != nil {
