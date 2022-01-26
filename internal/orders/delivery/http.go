@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"shiva/shiva-auth/cmd/http/middlewares"
@@ -77,7 +78,7 @@ func (h *Http) PaidXenditCallback(c echo.Context) error {
 	id, _ := converter.StringToUint(req.ExternalId)
 	res, err := h.usecase.WebhookPaidVA(id, req.Amount)
 	if err != nil {
-		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
+		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, errors.New(res))
 	}
 	if err := c.Bind(req); err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
