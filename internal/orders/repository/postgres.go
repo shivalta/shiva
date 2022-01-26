@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"gorm.io/gorm"
 	"shiva/shiva-auth/internal/orders"
 	"time"
@@ -18,7 +19,8 @@ func NewOrdersRepo(psql *gorm.DB) orders.Repository {
 
 func (p *pgOrdersRepo) GetById(id uint) (orders.Domain, error) {
 	model := Transactions{}
-	e := p.Psql.First(&model, id)
+	e := p.Psql.Preload("DetailTransactions").Preload("Products").First(&model, id)
+	fmt.Println("MODEL", model)
 	if e.Error != nil {
 		return orders.Domain{}, e.Error
 	}

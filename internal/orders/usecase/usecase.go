@@ -169,8 +169,8 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 
 	bodyEmail := `
 		<h2>Hello ` + us.Name + `!</h2><br/>
-		<i>No Invoice: SHIVA/ ` + strconv.Itoa(int(order.ID)) + `/X
-		Ada pesanan yang baru kamu buat : <br/>
+		Ada pesanan yang baru kamu buat : <br/>	
+		<i>No Invoice: SHIVA/` + strconv.Itoa(int(order.ID)) + `<br/><br/>
 		<table border="1" width="100%" >
 		   <tbody>
 			  <tr>
@@ -180,7 +180,7 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 			  </tr>
 			  <tr>
 				 <td>1</td>
-				 <td>` + strings.ToUpper(prod.Name) + `</td>
+				 <td>` + strings.ToUpper(prod.ProductCategory.Name) + ` - ` + strings.ToUpper(prod.Name) + `</td>
 				 <td>` + strconv.Itoa(order.TotalPrice) + `</td>
 			  </tr>
 		   </tbody>
@@ -190,7 +190,6 @@ func (u Usecase) CreateVA(productId uint, userId uint, bankCode string, userValu
 		Virtual Akun : ` + xendit.AccountNumber + `</b><br/><br/>
 		Thank you<br/>
 		Have a nice day & stay healthy!`
-	//`<br><br>Regards,<br>Shiva Admin`
 	err = smtpEmail.SendMail([]string{us.Email}, "SHIVA: Orderanmu Menunggu Pembayaran!", bodyEmail)
 	if err != nil {
 		return orders.Domain{}, err
@@ -209,29 +208,63 @@ func (u Usecase) WebhookPaidVA(externalId uint, amount int) (string, error) {
 		return "", baseErrors.ErrExpiredPay
 	}
 	if t.TotalPrice != amount {
-		status = "kadaluarsa"
 		_, err := u.data.WebhookPaidVA(externalId, "kadaluarsa")
 		if err != nil {
 			return "", err
 		}
 		return strconv.Itoa(t.TotalPrice) + ` ` + strconv.Itoa(amount), baseErrors.ErrAmountNotMatch
-	} else {
-		status = "bayar"
 	}
 	_, err = u.data.WebhookPaidVA(externalId, "bayar")
 	if err != nil {
 		return "", err
 	}
 
+	prod, err := u.product.GetById(t.Products.ID)
+	if err != nil {
+		return "", err
+	}
+
+	uniqueValue := prod.Name
+
 	if t.Products.ProductClass.Name == "token" || t.Products.ProductClass.Name == "listrik" || t.Products.ProductClass.Name == "pln" {
-		token, err := generator.GenerateToken()
+		uniqueValue, err = generator.GenerateToken()
 		if err != nil {
 			return "", err
 		}
-		err = u.data.UpdateUniqueValue(externalId, token)
+		err = u.data.UpdateUniqueValue(externalId, uniqueValue)
 		if err != nil {
 			return "", err
 		}
 	}
+
+	us, err := u.account.GetById(t.UserId)
+	if err != nil {
+		return "", err
+	}
+
+	bodyEmail := `
+		<h2>Hello ` + us.Name + `!</h2><br/>
+		<i>No Invoice: SHIVA/` + strconv.Itoa(int(t.ID)) + `<br/><br/>
+		Pembayaran kamu telah valid, dengan status <b>` + status + `</b><br/>
+		<table border="1" width="100%" >
+		   <tbody>
+			  <tr>
+				 <td>Produk</td>
+				 <td>Detail</td>
+			  </tr>
+			  <tr>
+				 <td>` + strings.ToUpper(prod.ProductCategory.Name) + `</td>
+				 <td>` + strings.ToUpper(uniqueValue) + `DEBUGSYALALA</td>
+			  </tr>
+		   </tbody>
+		</table>
+		<br/><br/>
+		Thank you<br/>
+		Have a nice day & stay healthy!`
+	err = smtpEmail.SendMail([]string{us.Email}, "SHIVA: Pembayaran Berhasil :)", bodyEmail)
+	if err != nil {
+		return "", err
+	}
+
 	return status, nil
 }
