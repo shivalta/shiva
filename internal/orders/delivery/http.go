@@ -80,8 +80,5 @@ func (h *Http) PaidXenditCallback(c echo.Context) error {
 	if err != nil {
 		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, errors.New(res))
 	}
-	if err := c.Bind(req); err != nil {
-		return baseResponse.ErrorResponse(c, http.StatusInternalServerError, err)
-	}
 	return baseResponse.SuccessResponse(c, ToXenditCallbackResponse(req.ExternalId, res), "xendit callback berhasil")
 }
