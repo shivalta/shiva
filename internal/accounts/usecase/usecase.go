@@ -44,7 +44,7 @@ func (uc accountUsecase) Verify(emailBase64 string, encrypt string) (accounts.Do
 	bodyEmail := `
 		<h2>Hello ` + u.Name + `!</h2>
 		Your account has been <font color="green"><b>actived</b></font> :)<br><br>Regards,<br>Shiva Admin`
-	err = smtpEmail.SendMail([]string{u.Email}, "Email Verified!", bodyEmail)
+	err = smtpEmail.SendMail([]string{u.Email}, "SHIVA: Email Verified!", bodyEmail)
 	u.IsActive = true
 	return u, nil
 }
@@ -159,7 +159,7 @@ func (uc accountUsecase) Create(user accounts.Domain) (accounts.Domain, error) {
 		<h2>Hello ` + user.Name + `!</h2>
 		Please verify your email with click this link : ` + url +
 		`<br><br>Regards,<br>Shiva Admin`
-	err = smtpEmail.SendMail([]string{user.Email}, "Email Registration Confirm", bodyEmail)
+	err = smtpEmail.SendMail([]string{user.Email}, "SHIVA: Email Registration Confirm", bodyEmail)
 	if err != nil {
 		return accounts.Domain{}, err
 	}

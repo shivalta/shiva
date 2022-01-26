@@ -32,4 +32,7 @@ aws_s3:
   access_key_id:
   secret_access_key:
 xendit:
+  base_url: https://api.xendit.co
   api_key:
+mockapi:
+  base_url: https://61d8193fe6744d0017ba8930.mockapi.io/
