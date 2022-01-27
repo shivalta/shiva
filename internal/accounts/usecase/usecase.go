@@ -66,7 +66,7 @@ func (uc accountUsecase) Login(email string, password string) (accounts.Domain, 
 		return accounts.Domain{}, "", baseErrors.ErrInvalidPassword
 	}
 
-	token, err := uc.jwtAuth.GenerateTokenJWT(user.ID, user.IsAdmin)
+	token, _ := uc.jwtAuth.GenerateTokenJWT(user.ID, user.IsAdmin)
 	if err != nil {
 		log.Println(err)
 	}
