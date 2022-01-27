@@ -77,6 +77,7 @@ func (p *pgAccountRepository) UpdateWithPassword(user accounts.Domain) (accounts
 		Email:     user.Email,
 		Handphone: user.Handphone,
 		Address:   user.Address,
+		Password:  user.Password,
 	})
 
 	if e.Error != nil {
