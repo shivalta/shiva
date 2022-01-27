@@ -202,8 +202,6 @@ func TestUpdate(t *testing.T) {
 	})
 }
 
-//}
-//
 func TestDelete(t *testing.T) {
 	t.Run("Test Case 1", func(t *testing.T) {
 		setup()
