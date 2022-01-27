@@ -60,6 +60,7 @@ func (p *pgProductsRepo) Update(d products.Domain) (products.Domain, error) {
 
 func (p *pgProductsRepo) UpdateWithoutImage(d products.Domain) (products.Domain, error) {
 	model := Products{}
+
 	e := p.Psql.Model(&model).Where("id = ?", d.ID).Updates(Products{
 		ProductClassId:    d.ProductClassId,
 		ProductCategoryId: d.ProductCategoryId,
@@ -70,6 +71,7 @@ func (p *pgProductsRepo) UpdateWithoutImage(d products.Domain) (products.Domain,
 		Price:             d.Price,
 		IsActive:          d.IsActive,
 	})
+
 	if e.Error != nil {
 		return products.Domain{}, e.Error
 	}

@@ -15,7 +15,7 @@ func AesEncrypt(stringToEncrypt string, keyString string) (encryptedString strin
 
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		panic(err.Error())
+		return ""
 	}
 
 	aesGCM, err := cipher.NewGCM(block)

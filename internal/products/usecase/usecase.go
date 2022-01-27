@@ -1,4 +1,4 @@
-package Usecase
+package usecase
 
 import (
 	"github.com/go-playground/validator/v10"
@@ -81,6 +81,9 @@ func (uc Usecase) Create(d products.Domain) (products.Domain, error) {
 
 func (uc Usecase) Update(d products.Domain) (products.Domain, error) {
 	_, err := uc.data.GetById(d.ID)
+	if err != nil {
+		return products.Domain{}, err
+	}
 	data, err := uc.data.UpdateWithoutImage(d)
 	if err != nil {
 		return products.Domain{}, err

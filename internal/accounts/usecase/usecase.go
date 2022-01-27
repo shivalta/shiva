@@ -66,7 +66,7 @@ func (uc accountUsecase) Login(email string, password string) (accounts.Domain, 
 		return accounts.Domain{}, "", baseErrors.ErrInvalidPassword
 	}
 
-	token, err := uc.jwtAuth.GenerateTokenJWT(user.ID, user.IsAdmin)
+	token, _ := uc.jwtAuth.GenerateTokenJWT(user.ID, user.IsAdmin)
 	if err != nil {
 		log.Println(err)
 	}
@@ -77,13 +77,11 @@ func (uc accountUsecase) Login(email string, password string) (accounts.Domain, 
 }
 
 func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
-	if user.ID != 0 {
-		u, err := uc.data.GetById(user.ID)
-		if err != nil {
-			return accounts.Domain{}, err
-		} else if u.ID == 0 {
-			return accounts.Domain{}, baseErrors.ErrNotFound
-		}
+	u, err := uc.data.GetById(user.ID)
+	if err != nil {
+		return accounts.Domain{}, err
+	} else if u.ID == 0 {
+		return accounts.Domain{}, baseErrors.ErrNotFound
 	}
 
 	if user.Name == "" {
@@ -91,8 +89,11 @@ func (uc accountUsecase) Update(user accounts.Domain) (accounts.Domain, error) {
 	} else if user.Handphone == "" {
 		return accounts.Domain{}, baseErrors.ErrUsersHandphoneRequired
 	}
+
 	if user.Password != "" {
 		if user.Repassword == user.Password {
+			bcryptPassword, _ := hash.HashPassword(user.Password)
+			user.Password = bcryptPassword
 			data, err := uc.data.UpdateWithPassword(user)
 			if err != nil {
 				return accounts.Domain{}, err
